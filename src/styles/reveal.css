@@ -1,0 +1,65 @@
+/* ============ Reveal on scroll ============ */
+
+/* Timing lives in one place: the queue in lib/reveal.ts walks the elements in
+   document order and spaces their starts by STAGGER_MS. Nothing here sets a
+   per-element delay, so the motion only has to be short enough that a run of
+   elements still feels like one gesture. */
+html.js [data-reveal] {
+  opacity: 0;
+  filter: blur(14px);
+  transform: translateY(16px);
+  transition:
+    opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, filter, transform;
+}
+
+html.js [data-reveal].is-revealed {
+  opacity: 1;
+  filter: blur(0);
+  transform: none;
+}
+
+/* Per-character / per-word split, used by the display headings */
+.split {
+  display: inline-block;
+  white-space: pre-wrap;
+}
+
+html.js .split__unit {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(16px);
+  transform: translateY(0.34em) rotate(2deg);
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.72s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i, 0) * 40ms);
+}
+
+html.js .split.is-revealed .split__unit {
+  opacity: 1;
+  filter: blur(0);
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-reveal],
+  html.js .split__unit {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+@media print {
+  [data-reveal],
+  .split__unit {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}

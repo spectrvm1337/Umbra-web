@@ -1,0 +1,74 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.nav__inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 1;
+  color: var(--text-strong);
+  text-decoration: none;
+  margin-right: auto;
+}
+
+/* Original app icon: a black disc with a white crescent cut into it. The disc
+   disappears into the dark background and only the crescent reads; on the
+   light theme the disc itself becomes the mark. Either way the artwork is
+   untouched, so it stays correct in both. */
+.nav__mark {
+  filter: drop-shadow(var(--mark-shadow));
+  width: 22px;
+  height: 22px;
+  display: block;
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+
+.nav__logo:hover .nav__mark {
+  opacity: 1;
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav__link {
+  font-size: 15px;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.nav__link:hover {
+  color: var(--text);
+}
+
+.nav .nav__cta {
+  height: 38px;
+  padding: 0 16px;
+  font-size: 15px;
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 720px) {
+  .nav__links {
+    display: none;
+  }
+}

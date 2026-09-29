@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Umbra</title>
+    <script>
+      // GitHub Pages has no rewrite rules, so a hard load of /Umbra-web/themes
+      // hits this file instead of the app. Park the requested path, boot the
+      // site at its real entry point, and let the router pick it back up.
+      sessionStorage.setItem(
+        'umbra-deep-link',
+        window.location.pathname + window.location.search + window.location.hash,
+      )
+      window.location.replace('/Umbra-web/')
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -1,0 +1,98 @@
+/**
+ * Дизайн-токены. Значения взяты из исходников Umbra (umbra_styles.css).
+ * Обводок нет намеренно: разделение держится на фоне и отступах.
+ */
+:root {
+  /* Поверхности */
+  --bg: #111111;
+  --surface: #1e1e1e;
+  --surface-hover: #242424;
+  --surface-deep: #161616;
+  --surface-raised: #232323;
+
+  /* Текст */
+  --text: #e3e3e3;
+  --text-dim: #737373;
+  --text-faint: #4a4a4a;
+
+  /* Акценты */
+  --accent: #507090;
+  --grad-from: #34c8e8;
+  --grad-to: #2f6bf0;
+
+  /* Геометрия */
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 20px;
+
+  /* Тени */
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.55);
+
+  /* Ритм */
+  --container: 1120px;
+  --gutter: 32px;
+  --section-y: 128px;
+
+  /* Fonts: Stolzl, Instrument Serif and Google Sans Flex only */
+  --font-ui: 'Stolzl', 'Google Sans Flex', sans-serif;
+  --font-display: 'Instrument Serif', sans-serif;
+  --font-code: 'Google Sans Flex', 'Stolzl', sans-serif;
+
+  /* Производные оттенки — вынесены, чтобы светлая тема перекрашивалась
+     одним блоком, а не правкой каждого файла. */
+  --text-strong: #ffffff;
+  --code: #9fc0da;
+  --line: rgba(255, 255, 255, 0.06);
+  --accent-soft: #7fa8c8;
+  --accent-tint: rgba(80, 112, 144, 0.22);
+  --accent-wash: rgba(80, 112, 144, 0.16);
+  /* Feature icons are SVG masks painted with this, so the theme decides. */
+  --feature-icon: #9fb3c8;
+  --hero-fade: #111111;
+  /* The Download pill keeps its own dark artwork, so its label stays white in
+     both themes. */
+  --on-media: #ffffff;
+  /* The black disc vanishes into the dark background; on the light theme it
+     needs an edge. */
+  --mark-shadow: none;
+  --mark-shadow-hero: none;
+}
+
+/**
+ * Светлая тема по пресету Paper из приложения:
+ * cardBg #f2f0e5, text #100f0f, accent #205ea6.
+ * Производные поверхности — те же формулы color-mix(), что в styles.css
+ * реального Umbra.
+ */
+html[data-theme='paper'] {
+  --paper-card: #f2f0e5;
+  --paper-text: #100f0f;
+  --paper-accent: #205ea6;
+
+  --bg: #e6e3d5;
+  --surface: var(--paper-card);
+  --surface-hover: color-mix(in srgb, var(--paper-card) 90%, var(--paper-text));
+  --surface-deep: color-mix(in srgb, var(--paper-card) 82%, #000);
+  --surface-raised: color-mix(in srgb, var(--paper-card) 94%, #fff);
+
+  --text: var(--paper-text);
+  --text-strong: var(--paper-text);
+  --text-dim: color-mix(in srgb, var(--paper-text) 45%, var(--paper-card));
+  --text-faint: color-mix(in srgb, var(--paper-text) 34%, var(--paper-card));
+
+  --accent: var(--paper-accent);
+  --code: #1d4b7a;
+  --line: color-mix(in srgb, var(--paper-text) 12%, transparent);
+  --accent-soft: color-mix(in srgb, var(--paper-accent) 80%, var(--paper-text));
+  /* Real Flexoki red, the hue the palette is actually named after. */
+  --feature-icon: #be5543;
+  --accent-tint: color-mix(in srgb, var(--paper-accent) 16%, transparent);
+  --accent-wash: color-mix(in srgb, var(--paper-accent) 10%, transparent);
+  --hero-fade: #e6e3d5;
+  --mark-shadow: 0 1px 2px rgba(16, 15, 15, 0.28);
+  --mark-shadow-hero: 0 2px 10px rgba(16, 15, 15, 0.22);
+
+  --shadow: 0 2px 10px rgba(16, 15, 15, 0.08);
+  --shadow-lg: 0 24px 64px rgba(16, 15, 15, 0.16);
+}

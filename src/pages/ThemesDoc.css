@@ -1,0 +1,282 @@
+.doc {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 96px var(--gutter) var(--section-y);
+}
+
+.doc__head {
+  max-width: 60ch;
+  margin-bottom: 88px;
+}
+
+.doc__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(44px, 6vw, 72px);
+  line-height: 1.1;
+  color: var(--text-strong);
+  margin-bottom: 20px;
+}
+
+.doc__lead {
+  font-size: 19px;
+  line-height: 1.65;
+  color: var(--text-dim);
+}
+
+.doc__section {
+  margin-bottom: 88px;
+}
+
+.doc__h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.2;
+  color: var(--text-strong);
+  margin-bottom: 20px;
+}
+
+.doc__text {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text-dim);
+  max-width: 68ch;
+  margin-bottom: 16px;
+}
+
+.doc__text code,
+.doc__steps code {
+  font-family: var(--font-code);
+  font-size: 15px;
+  color: var(--code);
+}
+
+.doc__steps {
+  list-style: none;
+  counter-reset: step;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.doc__steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 40px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+
+.doc__steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+}
+
+/* ============ Live lab ============ */
+
+.lab {
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+  gap: 28px;
+  margin-top: 32px;
+  align-items: start;
+}
+
+.lab__preview {
+  background: var(--surface-deep);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.lab__caption {
+  margin-top: 16px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  text-align: center;
+}
+
+.lab__editor {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-deep);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.lab__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--surface);
+}
+
+/* The editor column is the narrow half of the grid, so the preset row has to
+   give way first — otherwise the copy button gets pushed out by the
+   container's overflow: hidden. */
+.lab__tabs {
+  display: flex;
+  gap: 6px;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.lab__tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.lab__tab {
+  height: 28px;
+  padding: 0 11px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-dim);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition:
+    background 0.16s ease,
+    color 0.16s ease;
+}
+
+.lab__tab:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.lab__copy {
+  height: 28px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--surface-hover);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background 0.16s ease;
+}
+
+.lab__copy:hover {
+  background: var(--surface-hover);
+}
+
+.lab__code {
+  width: 100%;
+  min-height: 480px;
+  padding: 18px;
+  border: 0;
+  outline: none;
+  resize: vertical;
+  background: none;
+  color: var(--code);
+  font-family: var(--font-code);
+  font-size: 13.5px;
+  line-height: 1.7;
+  tab-size: 2;
+}
+
+.vars__flag {
+  display: inline-block;
+  margin-left: 5px;
+  padding: 0 6px;
+  border-radius: 4px;
+  background: var(--accent-tint);
+  color: var(--code);
+  font-size: 11px;
+  line-height: 16px;
+  vertical-align: 1px;
+  cursor: help;
+}
+
+.doc__note {
+  margin-top: 28px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text-dim);
+  max-width: 62ch;
+  padding-left: 18px;
+  border-left: 2px solid var(--accent);
+}
+
+.doc__note code {
+  font-family: var(--font-code);
+  font-size: 14px;
+  color: var(--code);
+}
+
+.sels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 24px;
+}
+
+.sels__item {
+  font-family: var(--font-code);
+  font-size: 13px;
+  color: var(--code);
+  background: var(--surface-deep);
+  border-radius: 6px;
+  padding: 5px 10px;
+}
+
+/* ============ Variable reference: 30 vars, laid out in columns not rows ============ */
+
+.vars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 2px 24px;
+}
+
+.vars__row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  min-width: 0;
+}
+
+.vars__name {
+  font-family: var(--font-code);
+  font-size: 13.5px;
+  color: var(--code);
+}
+
+.vars__desc {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-dim);
+}
+
+.vars__fallback {
+  font-family: var(--font-code);
+  font-size: 12px;
+  color: var(--text-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
