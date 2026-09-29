@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { GithubIcon } from './GithubIcon'
-import { GITHUB_URL, NAV_LINKS, RELEASES_URL } from '../site'
+import { GITHUB_URL, NAV_LINKS, RELEASES_URL, asset } from '../site'
 import './Footer.css'
 
 export function Footer() {
@@ -9,7 +9,7 @@ export function Footer() {
       <div className="footer__inner">
         <div className="footer__brand">
           <Link className="footer__logo" to="/">
-            <img className="footer__mark" src="/logo.png" alt="" width={256} height={256} />
+            <img className="footer__mark" src={asset('/logo.png')} alt="" width={256} height={256} />
             Umbra
           </Link>
           <p className="footer__copy">A minimalist launcher for Windows.</p>

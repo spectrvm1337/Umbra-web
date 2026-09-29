@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { GithubIcon } from './GithubIcon'
 import { ThemeToggle } from './ThemeToggle'
-import { GITHUB_URL, NAV_LINKS } from '../site'
+import { GITHUB_URL, NAV_LINKS, asset } from '../site'
 import './Nav.css'
 
 export function Nav() {
@@ -10,7 +10,7 @@ export function Nav() {
       <div className="nav__inner">
         {/* Client-side navigation, so it never reloads the current page */}
         <Link className="nav__logo" to="/">
-          <img className="nav__mark" src="/logo.png" alt="" width={256} height={256} />
+          <img className="nav__mark" src={asset('/logo.png')} alt="" width={256} height={256} />
           Umbra
         </Link>
 

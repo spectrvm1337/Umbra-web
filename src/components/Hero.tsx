@@ -1,6 +1,6 @@
 import { GithubIcon } from './GithubIcon'
 import { SplitText } from './Reveal'
-import { GITHUB_URL } from '../site'
+import { GITHUB_URL, asset } from '../site'
 import './Hero.css'
 
 export function Hero() {
@@ -9,7 +9,7 @@ export function Hero() {
       <div className="hero__inner">
         <div className="hero__text">
           <h1 className="hero__title" data-reveal="">
-            <img className="hero__mark" src="/logo.png" alt="" width={256} height={256} />
+            <img className="hero__mark" src={asset('/logo.png')} alt="" width={256} height={256} />
             <SplitText text="Umbra" mode="char" />
           </h1>
 
@@ -48,7 +48,7 @@ export function Hero() {
 
         <div className="hero__shot" data-reveal="">
           <img
-            src="/umbra-app.png"
+            src={asset('/umbra-app.png')}
             alt="Umbra — search and launch apps"
             width={1112}
             height={826}

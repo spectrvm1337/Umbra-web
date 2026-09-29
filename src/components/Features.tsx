@@ -1,41 +1,43 @@
+import { asset } from '../site'
+
 const FEATURES = [
   {
-    icon: '/icons/search-icon.svg',
+    icon: asset('/icons/search-icon.svg'),
     title: 'Instant search',
     text: 'Indexes the Start menu, the registry, Program Files and every drive on launch. Results show up immediately, with no waiting.',
   },
   {
-    icon: '/icons/pin_glyph.svg',
+    icon: asset('/icons/pin_glyph.svg'),
     title: 'Pinned items',
     text: 'Pin any result and drag to reorder. The pinned panel opens on an empty query.',
   },
   {
-    icon: '/icons/special-open-link.svg',
+    icon: asset('/icons/special-open-link.svg'),
     title: 'Web search from the box',
     text: 'A leading ! searches the web — !g, !yt, !gh, !wiki, !py and more. An unknown prefix falls back to Google.',
   },
   {
-    icon: '/icons/special-power.svg',
+    icon: asset('/icons/special-power.svg'),
     title: 'Power controls',
     text: 'Power off, reboot or suspend from the search field, behind a confirmation card.',
   },
   {
-    icon: '/icons/special-kill-x.svg',
+    icon: asset('/icons/special-kill-x.svg'),
     title: 'Kill a process',
     text: 'kill <name> terminates a process by name.',
   },
   {
-    icon: '/icons/ctx-admin-shield.svg',
+    icon: asset('/icons/ctx-admin-shield.svg'),
     title: 'Run as administrator',
     text: 'Right-click any result to open it, open as admin, open its directory or copy the path.',
   },
   {
-    icon: '/icons/settings-gear.svg',
+    icon: asset('/icons/settings-gear.svg'),
     title: 'Make it yours',
     text: 'Accent color, card opacity, corner radius, row height, glow, zoom, window position and monitor choice.',
   },
   {
-    icon: '/icons/photo_glyph.svg',
+    icon: asset('/icons/photo_glyph.svg'),
     title: '11 entity types',
     text: 'Apps, shortcuts, folders, documents, images, audio, video, archives, code, files and system utilities.',
   },
