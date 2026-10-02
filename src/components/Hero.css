@@ -93,16 +93,19 @@
 }
 
 /* One capture per theme, both the same size so nothing shifts on toggle.
-   The Paper one is lazy, so the dark visitors never pay for it. */
-.hero__shot-img--paper {
+   The Paper one is lazy, so dark visitors never pay for it.
+
+   Selectors have to repeat `.hero__shot img`, otherwise the element selector
+   above outranks a single class and the Paper shot never gets hidden. */
+.hero__shot img.hero__shot-img--paper {
   display: none;
 }
 
-html[data-theme='paper'] .hero__shot-img--dark {
+html[data-theme='paper'] .hero__shot img.hero__shot-img--dark {
   display: none;
 }
 
-html[data-theme='paper'] .hero__shot-img--paper {
+html[data-theme='paper'] .hero__shot img.hero__shot-img--paper {
   display: block;
 }
 
