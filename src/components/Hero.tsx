@@ -47,12 +47,24 @@ export function Hero() {
         </div>
 
         <div className="hero__shot" data-reveal="">
+          {/* Same window, one capture per theme. Toggled in CSS rather than JS so
+              it cannot drift from the theme the toggle actually applied. */}
           <img
+            className="hero__shot-img hero__shot-img--dark"
             src={asset('/umbra-app.png')}
             alt="Umbra — search and launch apps"
-            width={1112}
-            height={826}
+            width={1108}
+            height={818}
             loading="eager"
+          />
+          <img
+            className="hero__shot-img hero__shot-img--paper"
+            src={asset('/umbra-app-paper.png')}
+            alt=""
+            aria-hidden="true"
+            width={1108}
+            height={818}
+            loading="lazy"
           />
         </div>
       </div>

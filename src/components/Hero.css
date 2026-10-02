@@ -92,6 +92,20 @@
   box-shadow: none;
 }
 
+/* One capture per theme, both the same size so nothing shifts on toggle.
+   The Paper one is lazy, so the dark visitors never pay for it. */
+.hero__shot-img--paper {
+  display: none;
+}
+
+html[data-theme='paper'] .hero__shot-img--dark {
+  display: none;
+}
+
+html[data-theme='paper'] .hero__shot-img--paper {
+  display: block;
+}
+
 .hero__shot::after {
   content: '';
   position: absolute;
