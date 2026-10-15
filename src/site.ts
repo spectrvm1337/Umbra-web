@@ -2,6 +2,14 @@ export const GITHUB_URL = 'https://github.com/spectrvm1337/Umbra'
 export const RELEASES_URL = `${GITHUB_URL}/releases`
 
 /**
+ * The version this site talks about.
+ *
+ * Kept as one constant because it used to be typed into the hero and the
+ * download block separately, and both drifted apart from the actual release.
+ */
+export const VERSION = '0.1.8'
+
+/**
  * Prefix a public/ asset with the Vite base.
  *
  * Vite rewrites url() inside CSS, but a path written as a plain string in a
@@ -17,5 +25,6 @@ export const NAV_LINKS = [
   { href: '#commands', label: 'Commands' },
   { href: '#shortcuts', label: 'Shortcuts' },
   { href: '#themes', label: 'Themes' },
+  { href: '#roadmap', label: 'Roadmap' },
   { href: 'themes', label: 'Docs' },
 ] as const

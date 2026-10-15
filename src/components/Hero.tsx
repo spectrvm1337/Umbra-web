@@ -1,6 +1,6 @@
 import { GithubIcon } from './GithubIcon'
 import { SplitText } from './Reveal'
-import { GITHUB_URL, asset } from '../site'
+import { GITHUB_URL, VERSION, asset } from '../site'
 import './Hero.css'
 
 export function Hero() {
@@ -21,7 +21,7 @@ export function Hero() {
           <div className="hero__actions" data-reveal="">
             <div className="hero__download">
               <a className="btn btn--primary" href="#download">
-                Download 0.1.2
+                Download {VERSION}
               </a>
               <a className="btn-note" href="#download">
                 or the portable <code>umbra.exe</code>

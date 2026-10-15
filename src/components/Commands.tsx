@@ -11,7 +11,7 @@ const WEB = [
 
 const SYSTEM = [
   { code: '!help', label: 'Every command, in a list you can click' },
-  { code: 'kill', label: 'Terminate a process by name' },
+  { code: 'kill', label: 'Terminate a process by name — shows the app it found' },
   { code: 'shutdown', label: 'Power off the machine' },
   { code: 'restart', label: 'Reboot the machine' },
   { code: 'sleep', label: 'Suspend to RAM' },

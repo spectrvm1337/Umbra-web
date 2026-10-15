@@ -5,24 +5,22 @@ import { Link } from 'react-router-dom'
 // color-mix() formulas, so nothing here is invented.
 const THEMES = [
   { name: 'Default', card: '#1e1e1e', text: '#e3e3e3', accent: '#507090' },
-  { name: 'OLED', card: '#000000', text: '#e3e3e3', accent: '#507090' },
-  { name: 'Flexoki', card: '#1c1b1a', text: '#cecdc3', accent: '#4385be' },
   { name: 'Paper', card: '#f2f0e5', text: '#100f0f', accent: '#205ea6' },
-  { name: 'Slate', card: '#16181d', text: '#e3e3e3', accent: '#6c8cb0' },
-  { name: 'Cocoa', card: '#231c16', text: '#e3e3e3', accent: '#b08950' },
+  { name: 'Flexoki', card: '#1e1918', text: '#cecdc3', accent: '#d14d41' },
 ] as const
 
 export function Themes() {
   return (
     <section className="section" id="themes">
       <p className="section__eyebrow" data-reveal="">Themes</p>
-        <h2 className="section__title" data-reveal="">
-          Six presets, plus your own&nbsp;CSS
-        </h2>
+      <h2 className="section__title" data-reveal="">
+        Three presets, plus your own&nbsp;CSS
+      </h2>
       <p className="section__lead" data-reveal="">
-        Colors, opacity, corner radius, glow and borders are all adjustable. Or write a
-        theme in CSS and drop it into the <code>themes</code> folder — Umbra loads every
-        file from there. See the{' '}
+        Colors, opacity, corner radius, glow and borders are all adjustable, and{' '}
+        <em>Match Windows</em> follows your system theme and accent. Or write a theme in
+        CSS and drop it into the <code>themes</code> folder — Umbra loads every file from
+        there. See the{' '}
         <Link className="link" to="/themes">
           theming guide
         </Link>

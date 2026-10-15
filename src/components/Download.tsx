@@ -1,5 +1,5 @@
 import { GithubIcon } from './GithubIcon'
-import { GITHUB_URL, RELEASES_URL } from '../site'
+import { GITHUB_URL, RELEASES_URL, VERSION } from '../site'
 
 export function Download() {
   return (
@@ -8,13 +8,13 @@ export function Download() {
         <p className="section__eyebrow">Download</p>
         <h2 className="download__title">Give Umbra a try</h2>
         <p className="download__lead">
-          Version 0.1.2 — beta. Either the NSIS installer or the portable{' '}
+          Version {VERSION} — beta. Either the NSIS installer or the portable{' '}
           <code>umbra.exe</code> with no install step.
         </p>
 
         <div className="cta-row">
           <a className="btn btn--primary" href={RELEASES_URL} target="_blank" rel="noreferrer">
-            Download 0.1.2
+            Download {VERSION}
           </a>
 
           <a
