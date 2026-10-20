@@ -7,6 +7,7 @@ const THEMES = [
   { name: 'Default', card: '#1e1e1e', text: '#e3e3e3', accent: '#507090' },
   { name: 'Paper', card: '#f2f0e5', text: '#100f0f', accent: '#205ea6' },
   { name: 'Flexoki', card: '#1e1918', text: '#cecdc3', accent: '#d14d41' },
+  { name: 'Cream', card: '#f5f0dc', text: '#171717', accent: '#f0442e' },
 ] as const
 
 export function Themes() {
@@ -14,7 +15,7 @@ export function Themes() {
     <section className="section" id="themes">
       <p className="section__eyebrow" data-reveal="">Themes</p>
       <h2 className="section__title" data-reveal="">
-        Three presets, plus your own&nbsp;CSS
+        Four presets, plus your own&nbsp;CSS
       </h2>
       <p className="section__lead" data-reveal="">
         Colors, opacity, corner radius, glow and borders are all adjustable, and{' '}

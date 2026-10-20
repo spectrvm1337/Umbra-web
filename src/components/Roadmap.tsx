@@ -14,6 +14,9 @@ const SHIPPED = [
   'Ctrl shortcuts for rows, and Esc clears the query before it hides',
   'Updates inside the search bar, with progress',
   'A "Match Windows" switch for the theme',
+  'File preview: a quick peek or a full look at images, text, video and audio',
+  'Settings regrouped, with options that do not apply folded out of sight',
+  'A much lighter index watcher, so the launcher stays quiet while files change',
 ] as const
 
 const NEXT = [

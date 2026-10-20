@@ -32,6 +32,11 @@ const FEATURES = [
     text: 'Type 2+2*3 straight into the search box and the answer comes back as a card you can copy.',
   },
   {
+    icon: asset('/icons/photo_glyph.svg'),
+    title: 'File preview',
+    text: 'Shift + Space peeks at the selected file, Alt + Enter opens a full preview of images, text, video and audio.',
+  },
+  {
     icon: asset('/icons/special-power.svg'),
     title: 'Power controls',
     text: 'Power off, reboot or suspend from the search field, behind a confirmation card.',
