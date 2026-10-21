@@ -6,7 +6,6 @@ import { Features } from './components/Features'
 import { Commands } from './components/Commands'
 import { Shortcuts } from './components/Shortcuts'
 import { Themes } from './components/Themes'
-import { Roadmap } from './components/Roadmap'
 import { Download } from './components/Download'
 import { Footer } from './components/Footer'
 import { AppPage } from './pages/AppPage'
@@ -30,7 +29,6 @@ function Landing() {
         <Commands />
         <Shortcuts />
         <Themes />
-        <Roadmap />
         <Download />
       </main>
       <Footer />
