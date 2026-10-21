@@ -34,7 +34,7 @@ const FEATURES = [
   {
     icon: asset('/icons/photo_glyph.svg'),
     title: 'File preview',
-    text: 'Shift + Space peeks at the selected file, Alt + Enter opens a full preview of images, text, video and audio.',
+    text: 'The selected row opens up into a card that shows the file itself: its icon, a picture, a playing GIF or video, the start of a text file, a PDF page. Hold Shift + Space for a look, or leave it on in settings. Alt + Enter opens a full preview.',
   },
   {
     icon: asset('/icons/special-power.svg'),
@@ -60,6 +60,16 @@ const FEATURES = [
     icon: asset('/icons/photo_glyph.svg'),
     title: '11 entity types',
     text: 'Apps, shortcuts, folders, documents, images, audio, video, archives, code, files and system utilities.',
+  },
+  {
+    icon: asset('/icons/settings-gear.svg'),
+    title: 'Appearance panel',
+    text: 'Colours, shape, font, density and motion open in a panel beside the window, so the settings list stays short.',
+  },
+  {
+    icon: asset('/icons/document.svg'),
+    title: 'Fonts',
+    text: 'Three typefaces come with Umbra, and !font switches to any font installed on the machine.',
   },
   {
     icon: asset('/icons/settings-gear.svg'),

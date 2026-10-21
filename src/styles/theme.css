@@ -34,10 +34,10 @@
   --gutter: 32px;
   --section-y: 128px;
 
-  /* Fonts: Stolzl, Instrument Serif and Google Sans Flex only */
-  --font-ui: 'Stolzl', 'Google Sans Flex', sans-serif;
+  /* Fonts: Wix Madefor Display, Instrument Serif and Google Sans Flex only */
+  --font-ui: 'Wix Madefor Display', 'Google Sans Flex', sans-serif;
   --font-display: 'Instrument Serif', sans-serif;
-  --font-code: 'Google Sans Flex', 'Stolzl', sans-serif;
+  --font-code: 'Google Sans Flex', 'Wix Madefor Display', sans-serif;
 
   /* Производные оттенки — вынесены, чтобы светлая тема перекрашивалась
      одним блоком, а не правкой каждого файла. */

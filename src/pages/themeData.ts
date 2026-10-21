@@ -246,7 +246,7 @@ export const ALL_VARS: ThemeVar[] = [
   { name: '--tile-shadow', fallback: '0 1px 4px rgba(0, 0, 0, 0.35)', desc: 'Shadow of the 36x36 icon tiles.' },
   { name: '--glow-size', fallback: '0px', desc: 'Radius of the accent glow around cards.' },
   { name: '--glow-alpha', fallback: 'rgba(80, 112, 144, 0.4)', desc: 'Opacity of that glow.' },
-  { name: '--font-main', fallback: "'Stolzl', 'Noto Sans JP', 'SF Pro Text', 'Segoe UI', system-ui, sans-serif", desc: 'UI typeface.' },
+  { name: '--font-main', fallback: "'Wix Madefor Display', 'Noto Sans JP', 'SF Pro Text', 'Segoe UI', system-ui, sans-serif", desc: 'UI typeface.' },
   { name: '--weight-light', fallback: '300', desc: 'Light weight, used for dimmed text.' },
   { name: '--weight-regular', fallback: '400', desc: 'Default weight.' },
   { name: '--weight-medium', fallback: '500', desc: 'Medium weight, used for names and hints.' },

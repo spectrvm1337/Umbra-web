@@ -1,17 +1,23 @@
 @font-face {
-  font-family: 'Stolzl';
-  src: url('/fonts/stolzl_thin.otf') format('opentype');
-  font-weight: 100;
-}
-
-@font-face {
-  font-family: 'Stolzl';
-  src: url('/fonts/stolzl_light.otf') format('opentype');
-  font-weight: 300;
-}
-
-@font-face {
-  font-family: 'Stolzl';
-  src: url('/fonts/stolzl_regular.otf') format('opentype');
+  font-family: 'Wix Madefor Display';
+  src: url('/fonts/wix-madefor-display-400.ttf') format('truetype');
   font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Wix Madefor Display';
+  src: url('/fonts/wix-madefor-display-500.ttf') format('truetype');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Wix Madefor Display';
+  src: url('/fonts/wix-madefor-display-600.ttf') format('truetype');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Wix Madefor Display';
+  src: url('/fonts/wix-madefor-display-700.ttf') format('truetype');
+  font-weight: 700;
 }

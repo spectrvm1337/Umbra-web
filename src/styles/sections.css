@@ -181,7 +181,7 @@ kbd {
 
 /* ============ Themes ============ */
 
-/* Three presets, so the column count is pinned per breakpoint instead of
+/* Four presets, so the column count is pinned per breakpoint instead of
    auto-fit — auto-fit leaves a lone orphan card on the second row. */
 .themes {
   display: grid;
@@ -197,7 +197,7 @@ kbd {
 
 @media (min-width: 1120px) {
   .themes {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 

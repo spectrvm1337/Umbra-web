@@ -15,7 +15,7 @@
   width: 100%;
   height: 100%;
   padding-top: 12px;
-  font-family: 'Stolzl', 'Google Sans Flex', sans-serif;
+  font-family: 'Wix Madefor Display', 'Google Sans Flex', sans-serif;
   background: #111111;
   color: var(--text);
 }
@@ -145,7 +145,7 @@
 }
 
 .glyph-text {
-  font-family: 'Stolzl', sans-serif;
+  font-family: 'Wix Madefor Display', sans-serif;
   font-size: 13px;
   font-weight: 500;
   color: #ffffff;

@@ -7,7 +7,7 @@ export const RELEASES_URL = `${GITHUB_URL}/releases`
  * Kept as one constant because it used to be typed into the hero and the
  * download block separately, and both drifted apart from the actual release.
  */
-export const VERSION = '0.1.9'
+export const VERSION = '0.2.1'
 
 /**
  * Prefix a public/ asset with the Vite base.
