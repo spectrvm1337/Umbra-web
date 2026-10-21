@@ -25,5 +25,6 @@ export const NAV_LINKS = [
   { href: '#commands', label: 'Commands' },
   { href: '#shortcuts', label: 'Shortcuts' },
   { href: '#themes', label: 'Themes' },
+  { href: '#roadmap', label: 'Roadmap' },
   { href: 'themes', label: 'Docs' },
 ] as const

@@ -250,6 +250,67 @@ kbd {
   border-color: color-mix(in srgb, var(--code) 70%, transparent);
 }
 
+/* ============ Roadmap ============ */
+
+/* Two plain lists side by side on wide screens. No cards, no boxes — the
+   heading above each list is the only thing that marks it apart. */
+.roadmap {
+  display: grid;
+  gap: 40px 64px;
+}
+
+@media (min-width: 900px) {
+  .roadmap {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.roadmap__title {
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 16px;
+}
+
+.roadmap__list {
+  list-style: none;
+  padding: 0;
+}
+
+.roadmap__list li {
+  position: relative;
+  padding: 12px 0 12px 26px;
+  border-bottom: 1px solid var(--line);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+.roadmap__list li:last-child {
+  border-bottom: 0;
+}
+
+/* A short dash instead of a bullet glyph: it reads as a note, not a claim. */
+.roadmap__list li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 22px;
+  width: 12px;
+  height: 1px;
+  background: var(--text-faint);
+}
+
+/* Shipped items are done and shown as such; the rest are quieter still. */
+.roadmap__list:not(.roadmap__list--next) li {
+  color: var(--text);
+}
+
+.roadmap__list--next li {
+  color: var(--text-dim);
+}
+
 /* ============ Download ============ */
 
 .download {
