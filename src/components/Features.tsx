@@ -34,7 +34,7 @@ const FEATURES = [
   {
     icon: asset('/icons/photo_glyph.svg'),
     title: 'File preview',
-    text: 'The selected row opens up into a card that shows the file itself: its icon, a picture, a playing GIF or video, the start of a text file, a PDF page. Hold Shift + Space for a look, or leave it on in settings. Alt + Enter opens a full preview.',
+    text: 'The selected row opens up into a card that shows the file itself: its icon, a picture, a playing GIF or video, the start of a text file, a PDF page. Hold Shift + Space for a look, or leave it on in settings. Shift + Enter opens a full preview.',
   },
   {
     icon: asset('/icons/special-power.svg'),
@@ -65,6 +65,11 @@ const FEATURES = [
     icon: asset('/icons/settings-gear.svg'),
     title: 'Appearance panel',
     text: 'Colours, shape, font, density and motion open in a panel beside the window, so the settings list stays short.',
+  },
+  {
+    icon: asset('/icons/settings-gear.svg'),
+    title: 'Keybinds',
+    text: 'Every key Umbra answers to sits in one panel beside the window and can be rebound on the spot, the global hotkey included. A small arrow puts a changed one back.',
   },
   {
     icon: asset('/icons/document.svg'),

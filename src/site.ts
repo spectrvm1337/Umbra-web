@@ -7,7 +7,7 @@ export const RELEASES_URL = `${GITHUB_URL}/releases`
  * Kept as one constant because it used to be typed into the hero and the
  * download block separately, and both drifted apart from the actual release.
  */
-export const VERSION = '0.2.1'
+export const VERSION = '0.2.2'
 
 /**
  * Prefix a public/ asset with the Vite base.
@@ -25,6 +25,5 @@ export const NAV_LINKS = [
   { href: '#commands', label: 'Commands' },
   { href: '#shortcuts', label: 'Shortcuts' },
   { href: '#themes', label: 'Themes' },
-  { href: '#roadmap', label: 'Roadmap' },
   { href: 'themes', label: 'Docs' },
 ] as const

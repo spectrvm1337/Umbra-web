@@ -209,7 +209,7 @@ function Popups({ hover }: { hover: boolean }) {
           ['M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4', 'M10 17L15 12L10 7', 'Open', 'Enter'],
           ['M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', '', 'Open as admin', 'Ctrl+Shift+Enter'],
           ['M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z', '', 'Open directory', ''],
-          ['', 'M9 9h11a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2z', 'Copy path', 'Shift+Enter'],
+          ['', 'M9 9h11a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2z', 'Copy path', ''],
         ].map(([d, d2, label, sc], i) => (
           <div className={`ctx-item${hover && i === 1 ? ' is-on' : ''}`} key={label}>
             <span className="ctx-item-icon">
