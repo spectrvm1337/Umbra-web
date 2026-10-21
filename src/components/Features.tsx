@@ -29,7 +29,7 @@ const FEATURES = [
   {
     icon: asset('/icons/photo_glyph.svg'),
     title: 'File preview',
-    text: 'The selected row opens up into a card that shows the file itself: its icon, a picture, a playing GIF or video, the start of a text file, a PDF page. Hold Shift + Space for a look, or leave it on in settings. Shift + Enter opens a full preview.',
+    text: 'The selected row opens up into a card that shows the file itself: its icon, a picture, a playing GIF or video, the start of a text file, a PDF page. Hold Shift + Space for a look, or leave it on in settings.',
   },
   {
     icon: asset('/icons/ctx-admin-shield.svg'),

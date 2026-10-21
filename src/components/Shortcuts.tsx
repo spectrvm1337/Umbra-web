@@ -6,7 +6,6 @@ const SHORTCUTS = [
   { action: 'Pin or unpin the selection', keys: 'Ctrl + P' },
   { action: 'Run as admin', keys: 'Ctrl + Shift + Enter' },
   { action: 'Open the selected row into a card (hold)', keys: 'Shift + Space' },
-  { action: 'Open the full preview', keys: 'Shift + Enter' },
   { action: 'Complete query', keys: 'Tab' },
   { action: 'Move through results', keys: '↑ ↓' },
   { action: 'Walk through earlier queries', keys: 'Alt + ↑ ↓' },
