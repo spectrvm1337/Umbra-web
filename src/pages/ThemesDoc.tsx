@@ -19,7 +19,7 @@ const INLINE_VARS = new Set([
   '--text',
   '--accent',
   '--card-radius',
-  '--card-h',
+  '--gap',
   '--card-border-w',
   '--glow-size',
 ])
@@ -56,7 +56,7 @@ export function ThemesDoc() {
           <Reveal as="div">
             <h2 className="doc__h2">1. Create the file</h2>
             <ol className="doc__steps">
-              <li>Open Umbra settings and press the + swatch next to the theme presets.</li>
+              <li>Open Settings → Appearance and press the + after the Theme Presets.</li>
               <li>
                 Create a new file with a <code>.css</code> extension, for example{' '}
                 <code>my_theme.css</code>.
@@ -71,7 +71,9 @@ export function ThemesDoc() {
             <h2 className="doc__h2">2. Try it here first</h2>
             <p className="doc__text">
               Edit the CSS on the right. The panel on the left is the real interface at
-              its real size — switch tabs to walk through results, settings and popups.
+              its real size — switch tabs to walk through results, settings, the Appearance
+              panel and popups. Its Corner Radius and Search bar gradient switches work, so a
+              theme can be checked with squircle corners and without the gradient too.
             </p>
           </Reveal>
 
@@ -139,7 +141,10 @@ export function ThemesDoc() {
             The <b>!</b> marks the seven variables Umbra writes directly onto{' '}
             <code>&lt;html&gt;</code> as inline styles. Inline styles beat a normal
             <code>:root</code> rule, so those need <code>!important</code> in your file
-            or the in-app sliders will keep overwriting them.
+            or the in-app sliders will keep overwriting them. Three more are written the
+            same way only while they are customised: <code>--font-main</code> (a font picked
+            with <code>!font</code>), <code>--glow-alpha</code> and <code>--card-border</code>{' '}
+            (a custom glow or border colour).
           </p>
         </section>
 
@@ -158,7 +163,13 @@ export function ThemesDoc() {
                 '.result-name mark',
                 '.result-pin',
                 '#context-menu',
+                '.ctx-item',
                 '#content-menu',
+                '.ms-item',
+                '#theme-card',
+                '#keys-card',
+                '.su-key',
+                '#color-picker',
                 '.settings-row',
                 '.seg-btn',
                 '.stepper-btn',
@@ -181,6 +192,33 @@ export function ThemesDoc() {
               Avoid hard-coding colours that are already exposed as variables, otherwise
               the built-in opacity and radius sliders stop working.
             </p>
+          </Reveal>
+        </section>
+
+        <section className="doc__section">
+          <Reveal as="div">
+            <h2 className="doc__h2">5. Follow the settings</h2>
+            <p className="doc__text">
+              Umbra puts the state of its settings on <code>&lt;html&gt;</code> as attributes, so a
+              theme can look one way with a setting on and another with it off.
+            </p>
+            <div className="vars">
+              {[
+                ['[data-corners="squircle"]', 'Card Corner Radius is set to Squircle (round otherwise).'],
+                ['[data-blur="on"]', 'Blur is on: the cards are see-through over the blurred desktop.'],
+                ['[data-search-grad="on"]', 'Search bar gradient is on.'],
+                ['[data-density="compact-results"]', 'Density Compact; "compact-full" for All, none for Full.'],
+                ['[data-border-pos="inner"]', 'Card Border drawn inside; "outer" outside, "center" on the edge.'],
+                ['[data-font="sn-pro"]', 'The interface font: "wix", "sn-pro", "montserrat" or "system".'],
+                ['[data-anim-blur="off"]', 'A kind of motion switched off in Animations: blur, fade, move, size, colour, glow.'],
+              ].map(([attr, desc]) => (
+                <div className="vars__row" key={attr}>
+                  <code className="vars__name">{attr}</code>
+                  <span className="vars__desc">{desc}</span>
+                  <code className="vars__fallback">html{attr}</code>
+                </div>
+              ))}
+            </div>
           </Reveal>
         </section>
       </main>

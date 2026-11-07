@@ -117,16 +117,19 @@ export const TEMPLATE_CSS = `:root {
 
   /* Sizing */
   --card-radius: 12px !important;
-  --card-h: 52px !important;
+  --card-h: 52px;
+  --gap: 12px !important;
   --card-border-w: 1px !important;
   --glow-size: 0px !important;
 }
 
 /* The seven !important lines above are not decoration. Umbra writes
-   --card-bg, --text, --accent, --card-radius, --card-h, --card-border-w and
+   --card-bg, --text, --accent, --card-radius, --gap, --card-border-w and
    --glow-size straight onto <html> as inline styles every time the theme is
    applied, and an inline declaration beats any :root rule in your file.
-   Drop the !important on those and the sliders keep overwriting you. */`
+   Drop the !important on those and the sliders keep overwriting you.
+   --font-main, --glow-alpha and --card-border are written the same way, but
+   only while a font from !font or a custom glow or border colour is chosen. */`
 
 export const NEO_BRUTAL_CSS = `/* Neo-Brutalist theme for Umbra */
 
@@ -238,11 +241,16 @@ export const ALL_VARS: ThemeVar[] = [
   { name: '--tile-media', fallback: '#8B7EC8', desc: 'Tile colour for images.' },
   { name: '--card-radius', fallback: '12px', desc: 'Corner radius of every card.' },
   { name: '--card-border-w', fallback: '1px', desc: 'Border width of every card.' },
-  { name: '--card-h', fallback: '52px', desc: 'Height of the search bar and of every row.' },
+  { name: '--card-h', fallback: '52px', desc: 'Height of every result row (40px in the compact densities).' },
+  { name: '--search-h', fallback: '52px', desc: 'Height of the search bar (40px in the All compact density).' },
+  { name: '--result-icon', fallback: '36px', desc: 'Size of the icon in a result row.' },
+  { name: '--search-icon', fallback: '36px', desc: 'Size of the search icon box.' },
+  { name: '--btn', fallback: '28px', desc: 'Size of the small buttons in the search bar (clear, settings).' },
   { name: '--gap', fallback: '12px', desc: 'Spacing between rows and between sections.' },
   { name: '--pad-x', fallback: '20px', desc: 'Horizontal padding of the content column.' },
-  { name: '--card-shadow', fallback: '0 2px 8px rgba(0, 0, 0, 0.25), 0 0 var(--glow-size) var(--glow-alpha)', desc: 'Shadow of the result rows.' },
-  { name: '--bar-shadow', fallback: '0 2px 8px rgba(0, 0, 0, 0.25), 0 0 var(--glow-size) var(--glow-alpha)', desc: 'Shadow of the search bar and popups.' },
+  { name: '--pad-y', fallback: '12px', desc: 'Vertical padding above the drag bar and the search bar.' },
+  { name: '--card-shadow', fallback: '0 6px 16px -4px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.25), 0 0 var(--glow-size) var(--glow-alpha)', desc: 'Shadow of the result rows and cards.' },
+  { name: '--bar-shadow', fallback: '0 6px 16px -4px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.25), 0 0 var(--glow-size) var(--glow-alpha)', desc: 'Shadow of the search bar.' },
   { name: '--tile-shadow', fallback: '0 1px 4px rgba(0, 0, 0, 0.35)', desc: 'Shadow of the 36x36 icon tiles.' },
   { name: '--glow-size', fallback: '0px', desc: 'Radius of the accent glow around cards.' },
   { name: '--glow-alpha', fallback: 'rgba(80, 112, 144, 0.4)', desc: 'Opacity of that glow.' },
@@ -251,6 +259,8 @@ export const ALL_VARS: ThemeVar[] = [
   { name: '--weight-regular', fallback: '400', desc: 'Default weight.' },
   { name: '--weight-medium', fallback: '500', desc: 'Medium weight, used for names and hints.' },
   { name: '--weight-semibold', fallback: '600', desc: 'Semibold weight, used by notifications.' },
-  { name: '--ease-spring', fallback: 'cubic-bezier(0.34, 1.3, 0.64, 1)', desc: 'Spring easing for handle and pin motion.' },
-  { name: '--ease-out-apple', fallback: 'cubic-bezier(0.32, 0.72, 0, 1)', desc: 'Primary easing curve.' },
+  { name: '--font-num', fallback: "'Google Sans Flex', var(--font-main)", desc: 'Typeface of the big numbers in the calculator and currency cards.' },
+  { name: '--ease-out-apple', fallback: 'cubic-bezier(0.32, 0.72, 0, 1)', desc: 'The one easing curve every transition and animation uses.' },
+  { name: '--window-blur', fallback: '8px', desc: 'How blurred the window is while it fades in and out.' },
+  { name: '--enter-blur', fallback: '6px', desc: 'How blurred rows, cards, menus and panels are as they come in (0 with Animations → Blur off).' },
 ]

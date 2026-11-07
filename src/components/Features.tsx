@@ -44,7 +44,7 @@ const FEATURES = [
   {
     icon: asset('/icons/settings-gear.svg'),
     title: 'Appearance panel',
-    text: 'Accent, card opacity, corner radius, density, glow, font, motion and zoom open in a panel beside the window, or follow Windows.',
+    text: 'Accent, card opacity, blur, round or squircle corners, density, glow, font, motion, zoom and a soft gradient in the search bar open in a panel beside the window, or follow Windows.',
   },
   {
     icon: asset('/icons/settings-gear.svg'),

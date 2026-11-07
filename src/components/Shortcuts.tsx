@@ -10,6 +10,7 @@ const SHORTCUTS = [
   { action: 'Move through results', keys: '↑ ↓' },
   { action: 'Walk through earlier queries', keys: 'Alt + ↑ ↓' },
   { action: 'Clear the query, then hide', keys: 'Esc' },
+  { action: 'Open or close the settings (empty box)', keys: '→ ←' },
 ] as const
 
 export function Shortcuts() {

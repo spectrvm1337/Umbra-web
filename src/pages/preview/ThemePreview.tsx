@@ -6,6 +6,7 @@ import './umbra.css'
 const TABS = [
   { id: 'results', label: 'Results' },
   { id: 'settings', label: 'Settings' },
+  { id: 'appearance', label: 'Appearance' },
   { id: 'popups', label: 'Popups' },
 ] as const
 
@@ -87,100 +88,52 @@ function Results({ query, hover }: { query: string; hover: boolean }) {
 
 type SettingRow = { label: string; node: React.ReactNode; interactive?: boolean }
 
-function Settings({ query, capturing, toggle, align }: { query: string; capturing: boolean; toggle: boolean; align: number }) {
-  // The real app filters the settings list with the search field, so this does too.
-  const rows: SettingRow[] = [
-    {
-      label: 'Language',
-      node: (
-        <div className="seg-row">
-          {['EN', 'RU', 'DE', 'JA'].map((l, i) => (
-            <button className={`seg-btn${i === 0 ? ' active' : ''}`} type="button" key={l} tabIndex={-1}>
-              {l}
-            </button>
-          ))}
-        </div>
-      ),
-    },
-    {
-      label: 'Global Hotkey',
-      node: (
-        <span className={`settings-value${capturing ? ' is-capturing' : ''}`}>
-          {capturing ? 'press keys…' : 'Alt+Space'}
-        </span>
-      ),
-      interactive: true,
-    },
-    {
-      label: 'Run at startup',
-      node: (
-        <div className={`toggle${toggle ? ' on' : ''}`}>
-          <div className="toggle-knob" />
-        </div>
-      ),
-      interactive: true,
-    },
-    {
-      label: 'Accent',
-      node: (
-        <div className="swatch-row">
-          {['#4385be', '#879a39', '#d14d41', '#da702c', '#8b7ec8'].map((c, i) => (
-            <button
-              className={`swatch${i === 0 ? ' active' : ''}`}
-              style={{ background: c }}
-              type="button"
-              key={c}
-              tabIndex={-1}
-            />
-          ))}
-          <button className="swatch-custom" style={{ background: 'var(--accent)' }} type="button" tabIndex={-1}>
-            +
-          </button>
-        </div>
-      ),
-    },
-    {
-      label: 'Zoom',
-      node: (
-        <div className="zoom-stepper">
-          <button className="stepper-btn" type="button" tabIndex={-1}>
-            −
-          </button>
-          <span>1.00</span>
-          <button className="stepper-btn" type="button" tabIndex={-1}>
-            +
-          </button>
-        </div>
-      ),
-    },
-    {
-      label: 'Window Position',
-      node: (
-        <div className="align-grid">
-          {Array.from({ length: 9 }, (_, i) => (
-            <button className={`align-cell${i === align ? ' active' : ''}`} type="button" key={i} tabIndex={-1} />
-          ))}
-        </div>
-      ),
-    },
-    {
-      label: 'Indexed Files',
-      node: (
-        <>
-          <span className="settings-value">1,234 items</span>
-          <button className="settings-text-btn" type="button" tabIndex={-1}>
-            Rebuild
-          </button>
-        </>
-      ),
-    },
-  ]
+function Toggle({ on }: { on: boolean }) {
+  return (
+    <div className={`toggle${on ? ' on' : ''}`}>
+      <div className="toggle-knob" />
+    </div>
+  )
+}
 
+function Stepper({ value }: { value: string }) {
+  return (
+    <div className="zoom-stepper">
+      <button className="stepper-btn" type="button" tabIndex={-1}>
+        −
+      </button>
+      <span>{value}</span>
+      <button className="stepper-btn" type="button" tabIndex={-1}>
+        +
+      </button>
+    </div>
+  )
+}
+
+function Seg({ items, active, onPick }: { items: string[]; active: number; onPick?: (i: number) => void }) {
+  return (
+    <div className="seg-row">
+      {items.map((l, i) => (
+        <button
+          className={`seg-btn${i === active ? ' active' : ''}`}
+          type="button"
+          key={l}
+          tabIndex={-1}
+          onClick={onPick ? () => onPick(i) : undefined}
+        >
+          {l}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+function SettingsCard({ rows, query, id }: { rows: SettingRow[]; query: string; id?: string }) {
+  // The real app filters the settings with the search field, so this does too.
   const q = query.trim().toLowerCase()
   const visible = q ? rows.filter((r) => r.label.toLowerCase().includes(q)) : rows
-
   return (
-    <div className="special-card settings-card">
+    <div className="special-card settings-card" id={id}>
       {visible.length === 0 ? (
         <div id="empty-state">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -191,7 +144,7 @@ function Settings({ query, capturing, toggle, align }: { query: string; capturin
         </div>
       ) : (
         visible.map((row) => (
-          <div key={row.label} className={`settings-row${row.interactive ? ' interactive is-on' : ''}`}>
+          <div key={row.label} className={`settings-row${row.interactive ? ' interactive' : ''}`}>
             <span className="settings-label">{row.label}</span>
             {row.node}
           </div>
@@ -199,6 +152,107 @@ function Settings({ query, capturing, toggle, align }: { query: string; capturin
       )}
     </div>
   )
+}
+
+function Settings({ query, capturing, toggle, align }: { query: string; capturing: boolean; toggle: boolean; align: number }) {
+  const rows: SettingRow[] = [
+    { label: 'Appearance', node: <span className="exclude-chevron">›</span>, interactive: true },
+    { label: 'Keybinds', node: <span className="exclude-chevron">›</span>, interactive: true },
+    { label: 'Language', node: <Seg items={['EN', 'RU', 'DE', 'JA']} active={0} /> },
+    {
+      label: 'Global Hotkey',
+      node: capturing ? (
+        <span className="settings-value is-capturing">press keys…</span>
+      ) : (
+        <span className="settings-value" id="setting-hotkey-value">
+          <span className="su-key">Alt</span>
+          <span className="su-plus">+</span>
+          <span className="su-key">Space</span>
+        </span>
+      ),
+      interactive: true,
+    },
+    { label: 'Run at Windows startup', node: <Toggle on={toggle} />, interactive: true },
+    {
+      label: 'Window Position',
+      node: (
+        <div className="align-grid">
+          {Array.from({ length: 9 }, (_, i) => (
+            <button className={`align-cell${i === align ? ' active' : ''}`} type="button" key={i} tabIndex={-1} />
+          ))}
+        </div>
+      ),
+    },
+    { label: 'Favorites', node: <Seg items={['List', 'Left', 'Right']} active={0} /> },
+    {
+      label: 'Indexed Files',
+      node: (
+        <>
+          <span className="settings-value">787,830 items</span>
+          <button className="settings-text-btn" type="button" tabIndex={-1}>
+            Rebuild Index
+          </button>
+        </>
+      ),
+    },
+  ]
+  return <SettingsCard rows={rows} query={query} />
+}
+
+/** The Appearance panel; its Corner Radius and Search bar gradient switches drive the preview. */
+function Appearance({
+  query,
+  squircle,
+  setSquircle,
+  gradient,
+  setGradient,
+}: {
+  query: string
+  squircle: boolean
+  setSquircle: (on: boolean) => void
+  gradient: boolean
+  setGradient: (on: boolean) => void
+}) {
+  const swatches = (colors: string[], active: number, plus = true) => (
+    <div className="swatch-row">
+      {colors.map((c, i) => (
+        <button className={`swatch${i === active ? ' active' : ''}`} style={{ background: c }} type="button" key={c} tabIndex={-1} />
+      ))}
+      {plus && (
+        <button className="swatch-custom" type="button" tabIndex={-1}>
+          +
+        </button>
+      )}
+    </div>
+  )
+  const rows: SettingRow[] = [
+    { label: 'Theme Presets', node: swatches(['#507090', '#1f5fa8', '#d14d41', '#879a39', '#6f6f6f'], 0) },
+    { label: 'Accent Color', node: swatches(['#d14d41', '#da702c', '#4385be', '#879a39', '#8b7ec8'], 2) },
+    { label: 'Card Opacity', node: <Stepper value="100%" /> },
+    {
+      label: 'Card Corner Radius',
+      node: (
+        <>
+          <Seg items={['Round', 'Squircle']} active={squircle ? 1 : 0} onPick={(i) => setSquircle(i === 1)} />
+          <Stepper value="12" />
+        </>
+      ),
+    },
+    { label: 'Glow Effect', node: <Toggle on={false} /> },
+    {
+      label: 'Search bar gradient',
+      node: (
+        <div onClick={() => setGradient(!gradient)} style={{ marginLeft: 'auto', cursor: 'pointer' }}>
+          <Toggle on={gradient} />
+        </div>
+      ),
+    },
+    { label: 'Animations', node: <span className="settings-value">6/6 ›</span>, interactive: true },
+    { label: 'Density', node: <Seg items={['Full', 'Compact', 'All']} active={0} /> },
+    { label: 'Row Spacing', node: <Stepper value="12" /> },
+    { label: 'Zoom Level', node: <Stepper value="1.00" /> },
+  ]
+  return <SettingsCard rows={rows} query={query} id="theme-card" />
 }
 
 function Popups({ hover }: { hover: boolean }) {
@@ -262,6 +316,8 @@ export function ThemePreview({ css }: { css: string }) {
   const scopeClass = `tprev${rawId.replace(/[^a-zA-Z0-9_-]/g, '')}`
   const [tab, setTab] = useState<TabId>('results')
   const [query, setQuery] = useState('doc')
+  const [squircle, setSquircle] = useState(false)
+  const [gradient, setGradient] = useState(true)
 
   const clearRef = useRef<HTMLButtonElement | null>(null)
   useEffect(() => {
@@ -283,7 +339,7 @@ export function ThemePreview({ css }: { css: string }) {
 
   return (
     <div className={scopeClass}>
-      <div className="tp">
+      <div className="tp" data-corners={squircle ? 'squircle' : 'round'} data-search-grad={gradient ? 'on' : 'off'}>
         <div className="tp__tabs" role="tablist">
           {TABS.map((t) => (
             <button
@@ -292,7 +348,11 @@ export function ThemePreview({ css }: { css: string }) {
               role="tab"
               aria-selected={tab === t.id}
               className={`tp__tab${tab === t.id ? ' is-on' : ''}`}
-              onClick={() => setTab(t.id)}
+              onClick={() => {
+                setTab(t.id)
+                // The settings are filtered by the query, as in the app; the results example would hide them all.
+                if (t.id === 'settings') setQuery('')
+              }}
             >
               {t.label}
             </button>
@@ -319,7 +379,10 @@ export function ThemePreview({ css }: { css: string }) {
             <button id="clear-btn" ref={clearRef} type="button" onClick={() => setQuery('')}>
               <CrossIcon />
             </button>
-            <button id="settings-btn" className={tab === 'settings' ? 'open' : ''} type="button" onClick={() => setTab('settings')}>
+            <button id="settings-btn" className={tab === 'settings' ? 'open' : ''} type="button" onClick={() => {
+                setTab('settings')
+                setQuery('')
+              }}>
               <GearIcon />
             </button>
           </div>
@@ -328,6 +391,15 @@ export function ThemePreview({ css }: { css: string }) {
             {tab === 'results' && <Results query={query} hover={!!hover} />}
             {tab === 'settings' && (
               <Settings query={query} capturing={!!capturing} toggle={!!toggle} align={align} />
+            )}
+            {tab === 'appearance' && (
+              <Appearance
+                query=""
+                squircle={squircle}
+                setSquircle={setSquircle}
+                gradient={gradient}
+                setGradient={setGradient}
+              />
             )}
             {tab === 'popups' && <Popups hover={!!hover} />}
           </div>

@@ -14,14 +14,15 @@ const WEB = [
 const TOOLS = [
   { code: '(2+3)*4', label: 'Calculator in the box: + − × ÷ ^ %, brackets, 200+10%' },
   { code: '100 usd to rub', label: 'Live currency converter' },
-  { code: '#c83939', label: 'Colour info, and !color picks any colour on screen' },
+  { code: '#c83939', label: 'Colour info: RGB, HSL, shades and the colours you picked' },
+  { code: '!picker', label: 'The colour picker on your last colour, with a loupe for the screen' },
   { code: '!font <name>', label: 'Switch the interface to any installed font' },
   { code: 'link or path', label: 'Paste a URL, a file or a folder and it opens' },
 ] as const
 
 const SYSTEM = [
   { code: '!help', label: 'Every command, in a list you can click' },
-  { code: 'kill', label: 'Terminate a process by name — shows the app it found' },
+  { code: 'kill', label: 'End a process by name or part of it — shows the app it found' },
   { code: 'shutdown', label: 'Power off the machine' },
   { code: 'restart', label: 'Reboot the machine' },
   { code: 'sleep', label: 'Suspend to RAM' },
