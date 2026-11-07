@@ -40,6 +40,18 @@ rewriting `:root` to a generated class, and uses the app's own selectors, so a t
 that works on the page works in the app.
 
 Note that the app writes `--card-bg`, `--text`, `--accent`, `--card-radius`,
-`--card-h`, `--card-border-w` and `--glow-size` onto `<html>` as inline styles on
+`--gap`, `--card-border-w` and `--glow-size` onto `<html>` as inline styles on
 every theme change. Inline styles beat a plain `:root` rule, so a custom theme needs
 `!important` on exactly those seven.
+
+## Theme preview
+
+The preview on the Docs page is Umbra's own window: its stylesheet, fonts and markup, copied into
+`public/preview` from the app. After an Umbra release, bring it up to date with
+
+```bash
+node scripts/sync-preview.mjs ../Umbra
+```
+
+`public/preview/preview.css` and `preview.js` (the page around the window and the sample data) are
+written by hand and are not touched by it.

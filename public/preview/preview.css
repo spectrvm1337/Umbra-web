@@ -1,0 +1,96 @@
+/* The docs preview's own rules, over Umbra's stylesheet (umbra.css, copied from the app by
+   scripts/sync-preview.mjs). They only lay the window out on a page instead of on a desktop: the
+   column flows to its full height, and the panels and menus the app floats beside it sit in it. */
+
+html,
+body {
+  height: auto;
+  overflow: hidden;
+}
+body {
+  /* Something behind the window, so see-through cards read as they do over a desktop. */
+  background: linear-gradient(135deg, #34424a 0%, #4a3f54 45%, #23302f 100%);
+  padding-bottom: 20px;
+}
+
+/* The window is always up; the summon's fade and slide are the app's, not the page's. */
+#app-container {
+  height: auto;
+  opacity: 1;
+  filter: none;
+  transition: none;
+}
+
+/* The list flows instead of scrolling inside a box the window's height. */
+#results-wrapper {
+  flex: none;
+  overflow: visible;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+#results-container {
+  position: static;
+  overflow: visible;
+}
+
+/* Things that belong to a desktop window, not a page. */
+#setup,
+#size-pill,
+#custom-scrollbar,
+#pins-toggle,
+#index-spinner,
+#hint {
+  display: none !important;
+}
+
+/* Appearance: the panel the app hangs beside the window sits under the search bar. */
+html:not([data-tab='appearance']) #theme-panel {
+  display: none;
+}
+html[data-tab='appearance'] #results-wrapper {
+  display: none;
+}
+html[data-tab='appearance'] #theme-panel {
+  position: static;
+  display: flex;
+  width: auto;
+  margin: var(--gap) var(--pad-x) 0;
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  filter: none;
+}
+html[data-tab='appearance'] #theme-card {
+  max-height: none;
+  overflow: visible;
+}
+
+/* Popups: the menus and the confirm card side by side, open. */
+html[data-tab='popups'] #results-wrapper {
+  margin-top: var(--gap);
+}
+.pv-popups {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 0 var(--pad-x);
+}
+.pv-popups > .pv-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.pv-popups #context-menu,
+.pv-popups #content-menu {
+  position: static;
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+.pv-popups #content-menu {
+  width: 232px;
+}
+.pv-popups .special-card {
+  animation: none;
+}

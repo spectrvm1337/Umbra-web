@@ -1,0 +1,4181 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600&family=Google+Sans+Flex:wght@400&display=swap');
+/* Registering the layout lengths makes them animatable, so switching density
+   morphs the UI instead of snapping. Without @property a var() change is a
+   discrete swap no transition can catch. */
+@property --card-h {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 52px;
+}
+@property --search-h {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 52px;
+}
+@property --search-icon {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 36px;
+}
+@property --btn {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 28px;
+}
+@property --result-icon {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 36px;
+}
+@property --gap {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 12px;
+}
+@property --pad-y {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 12px;
+}
+/* The bundled fonts (Settings > Font), tuned to match one another: the file standing for each weight,
+   the size and the vertical metrics. */
+@font-face {
+  font-family: 'Wix Madefor Display';
+  src: url('./fonts/wix-madefor-display-500.ttf') format('truetype');
+  font-weight: 300;
+  size-adjust: 106%;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Wix Madefor Display';
+  src: url('./fonts/wix-madefor-display-700.ttf') format('truetype');
+  font-weight: 400 500;
+  size-adjust: 106%;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Wix Madefor Display';
+  src: url('./fonts/wix-madefor-display-800.ttf') format('truetype');
+  font-weight: 600 700;
+  size-adjust: 106%;
+  font-display: block;
+}
+@font-face {
+  font-family: 'SN Pro';
+  src: url('./fonts/sn-pro-400.ttf') format('truetype');
+  font-weight: 300;
+  size-adjust: 107%;
+  font-display: block;
+}
+@font-face {
+  font-family: 'SN Pro';
+  src: url('./fonts/sn-pro-600.ttf') format('truetype');
+  font-weight: 400 500;
+  size-adjust: 107%;
+  font-display: block;
+}
+@font-face {
+  font-family: 'SN Pro';
+  src: url('./fonts/sn-pro-700.ttf') format('truetype');
+  font-weight: 600 700;
+  size-adjust: 107%;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Montserrat Alternates';
+  src: url('./fonts/montserrat-alternates-300.ttf') format('truetype');
+  font-weight: 300;
+  size-adjust: 102%;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Montserrat Alternates';
+  src: url('./fonts/montserrat-alternates-600.ttf') format('truetype');
+  font-weight: 400 500;
+  size-adjust: 102%;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Montserrat Alternates';
+  src: url('./fonts/montserrat-alternates-700.ttf') format('truetype');
+  font-weight: 600 700;
+  size-adjust: 102%;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Google Sans Flex';
+  src: url('./google_sans_flex_regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Google Sans Flex';
+  src: url('./google_sans_flex_medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: block;
+}
+:root {
+  --font-main: 'Wix Madefor Display', 'Noto Sans JP', 'Segoe UI', system-ui, sans-serif;
+  /* Figures (hex codes, colour values, amounts): one partner face, then whatever font is chosen. */
+  --font-num: 'Google Sans Flex', var(--font-main);
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --card-bg: #1E1E1E;
+  --card-radius: 12px;
+  --card-h: 52px;
+  --search-h: 52px;
+  --search-icon: 36px;
+  --btn: 28px;
+  --result-icon: 36px;
+  --glow-size: 0px;
+  --glow-alpha: rgba(80, 112, 144, 0.4);
+  /* Enough shadow to lift the cards off whatever is behind the window (text in another app read
+     straight through a see-through card). A soft wide layer, pulled in by its negative spread so it
+     reaches 18px down, 12px to the sides (the window keeps --pad-x, 20px) and only 6px up, and a
+     tight one that draws the edge. */
+  --card-shadow: 0 6px 16px -4px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.25), 0 0 var(--glow-size) var(--glow-alpha);
+  --bar-shadow: 0 6px 16px -4px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.25), 0 0 var(--glow-size) var(--glow-alpha);
+  --tile-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-border-w: 1px;
+  --gap: 12px;
+  --pad-x: 20px;
+  --pad-y: 12px;
+  --text: #E3E3E3;
+  --text-dim: #737373;
+  --update-blue: #3b82f6;
+  --icon: #b5b5b5;
+  --accent: #507090;
+  --card-hover: #2c2c2c;
+  --card-selected: #2c2c2c;
+  --card-deep: #161616;
+  --card-line: #383838;
+  --tile-exe: #5E5C64;
+  --tile-folder: #DA702C;
+  --tile-media: #8B7EC8;
+  /* How blurred the window is while it fades in and out. The cards sit 20px from
+     the window edge and the blur spreads about twice its radius, so a larger
+     value reaches the edge, where the window slices the haze off in a straight
+     line. Keep it at about half the side margin or less. */
+  --window-blur: 8px;
+  /* How blurred a card, row, menu or panel is as it comes in (Settings → Animations → Blur);
+     0 with Blur off (below), so the same animations run without it. */
+  --enter-blur: 6px;
+  /* The one easing curve: every transition and one-shot animation uses it (loops keep their own).
+     JS animations read it too (motionEase in main.js), and so does the blur in Rust (blur.rs). */
+  --ease-out-apple: cubic-bezier(0.32, 0.72, 0, 1);
+transition:
+      --card-h var(--t-size, .24s) var(--ease-out-apple),
+      --search-h var(--t-size, .24s) var(--ease-out-apple),
+      --search-icon var(--t-size, .24s) var(--ease-out-apple),
+      --btn var(--t-size, .24s) var(--ease-out-apple),
+      --result-icon var(--t-size, .24s) var(--ease-out-apple),
+      --gap var(--t-size, .24s) var(--ease-out-apple),
+      --pad-y var(--t-size, .24s) var(--ease-out-apple)
+  }
+/* The interface font (Settings > Font). Wix Madefor Display is the default and needs no rule. */
+html[data-font="sn-pro"] {
+  --font-main: 'SN Pro', 'Noto Sans JP', 'Segoe UI', system-ui, sans-serif;
+}
+html[data-font="montserrat"] {
+  --font-main: 'Montserrat Alternates', 'Noto Sans JP', 'Segoe UI', system-ui, sans-serif;
+}
+/* Four to a line; fonts picked with !font wrap onto the lines below. */
+#font-seg {
+  grid-auto-flow: row;
+  grid-template-columns: repeat(var(--font-cols, 3), minmax(0, 1fr));
+}
+#font-seg {
+  transition: grid-template-columns var(--t-size, 0.45s) var(--ease-out-apple);
+}
+#font-seg .seg-btn {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* A custom font being dropped (right-click): folds to nothing while its column closes. */
+#font-seg .seg-btn.seg-leaving {
+  min-width: 0;
+  padding-left: 0;
+  padding-right: 0;
+  opacity: 0;
+  filter: blur(var(--enter-blur));
+  pointer-events: none;
+  transition: padding var(--t-size, 0.45s) var(--ease-out-apple), opacity var(--t-fade, 0.3s) var(--ease-out-apple),
+    filter var(--t-blur, 0.3s) var(--ease-out-apple);
+}
+#font-seg .seg-btn[data-font="wix"] { font-family: 'Wix Madefor Display', sans-serif; }
+#font-seg .seg-btn[data-font="sn-pro"] { font-family: 'SN Pro', sans-serif; }
+#font-seg .seg-btn[data-font="montserrat"] { font-family: 'Montserrat Alternates', sans-serif; }
+/* Density modes. `full` is the roomy default and needs no rule here.
+   Both compact modes shrink the rows and tighten the gap; only
+   `compact-full` also shrinks the search bar. Kept as attribute selectors so
+   a custom theme can still override any individual variable. */
+html[data-density="compact-results"] {
+  --card-h: 40px;
+  --search-h: 52px;
+  --search-icon: 36px;
+  --btn: 28px;
+  --result-icon: 28px;
+  --gap: 8px;
+  --pad-y: 6px;
+}
+html[data-density="compact-full"] {
+  --card-h: 40px;
+  --search-h: 40px;
+  --search-icon: 28px;
+  --btn: 24px;
+  --result-icon: 28px;
+  --gap: 8px;
+  --pad-y: 6px;
+}
+/* Derive hover/border/glow shades from the accent + background so a custom
+   theme only has to set --accent and --card-bg. */
+@supports (color: color-mix(in srgb, red 50%, blue)) {
+  :root {
+    --glow-alpha: color-mix(in srgb, var(--accent) 40%, transparent);
+    --card-border: color-mix(in srgb, var(--text) 8%, transparent);
+    /* Paths, values, the placeholder: 62% is the least that reads at 4.5:1 on every preset (28%
+       gave 2:1, the paths under the names were hard to make out). */
+    --text-dim: color-mix(in srgb, var(--text) 62%, var(--card-bg));
+    --icon: color-mix(in srgb, var(--text) 75%, var(--card-bg));
+    --card-hover: color-mix(in srgb, var(--card-bg) 90%, var(--text));
+    --card-selected: color-mix(in srgb, var(--card-bg) 90%, var(--text));
+    --card-deep: color-mix(in srgb, var(--card-bg) 78%, #000);
+    --card-line: color-mix(in srgb, var(--card-bg) 86%, var(--text));
+  }
+}
+/* With Blur on the cards are see-through, and the deep shade above (the card mixed with opaque black)
+   came out denser and darker than the card around it: a dirty patch over the blur. The controls
+   drawn on it (steppers, segments, buttons, the picker's fields) take the card's own colour instead,
+   solid, so they read as plain surfaces over the blur. */
+html[data-blur="on"] {
+  --card-deep: rgb(from var(--card-bg) r g b / 1);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  font-family: var(--font-main);
+  background: transparent;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  width: 100%;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  font-stretch: normal;
+  font-synthesis-weight: auto;
+  font-synthesis-style: none;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+#app-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding-top: var(--pad-y);
+  background: transparent;
+  opacity: 0;
+  filter: blur(var(--window-blur));
+  /* The slide in and out on show and hide is the window's own (commands/window.rs), not a transform
+     here: moved as a whole, the blur Windows draws under the cards goes with the page instead of a
+     frame behind it. */
+  /* The column's place for "Fold favorites" (pinsfold.js) is the window's: set_window_lift moves the
+     whole window, so the blur goes with it. */
+  transition:  opacity var(--t-fade, 320ms) var(--ease-out-apple),
+    filter var(--t-blur, 380ms) var(--ease-out-apple),
+    transform var(--t-move, 320ms) var(--ease-out-apple),
+    translate var(--t-move, 0.55s) var(--ease-out-apple)
+}
+/* A summon puts the column in place at once (pinsfold.js). */
+#app-container.lift-instant {
+  transition-property: opacity, filter, transform;
+}
+#app-container.window-showing {
+  opacity: 1;
+  filter: none;
+}
+#app-container.window-hidden {
+  opacity: 0;
+  filter: blur(var(--window-blur));
+}
+/* While the window is resized for the pins dock (dock.js) the card steps out of sight, so
+   the frames in which the window and the layout disagree are never seen. */
+#app-container.dock-switching {
+  opacity: 0;
+  transition: opacity var(--t-fade, 80ms) var(--ease-out-apple);
+}
+#app-container.dragging {
+  opacity: 0.85;
+  filter: drop-shadow(0 0 20px rgba(80, 112, 144, 0.3));
+  transition:  opacity var(--t-fade, 0.15s) var(--ease-out-apple), filter var(--t-blur, 0.15s) var(--ease-out-apple)
+}
+.drag-bar {
+  position: relative;
+  width: 100%;
+  height: calc(var(--pad-y) + 20px);
+  margin: 0 auto calc(var(--pad-y) - 4px);
+  cursor: grab;
+  flex-shrink: 0;
+}
+.db-rect {
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 36px;
+  height: 6px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  /* White over a dark wallpaper, dark over a light one: contrast.js reads what is behind the window. */
+  background-color: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 0 0 0 transparent;
+  overflow: hidden;
+  opacity: 1;
+  transition:  width var(--t-size, 0.3s) var(--ease-out-apple),
+    height var(--t-size, 0.3s) var(--ease-out-apple),
+    padding var(--t-move, 0.3s) var(--ease-out-apple),
+    border-radius var(--t-size, 0.3s) var(--ease-out-apple),
+    background-color var(--t-color, 0.25s) var(--ease-out-apple),
+    border-color var(--t-color, 0.25s) var(--ease-out-apple),
+    box-shadow var(--t-glow, 0.25s) var(--ease-out-apple),
+    opacity var(--t-fade, 0.2s) var(--ease-out-apple)
+}
+.drag-bar:hover:not(.notify):not(.active) .db-rect {
+  width: 40px;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.95);
+  opacity: 1;
+  transition:  width var(--t-size, 0.38s) var(--ease-out-apple),
+    height var(--t-size, 0.38s) var(--ease-out-apple),
+    padding var(--t-move, 0.25s) var(--ease-out-apple),
+    border-radius var(--t-size, 0.25s) var(--ease-out-apple),
+    background-color var(--t-color, 0.3s) var(--ease-out-apple),
+    border-color var(--t-color, 0.25s) var(--ease-out-apple),
+    box-shadow var(--t-glow, 0.25s) var(--ease-out-apple),
+    opacity var(--t-fade, 0.3s) var(--ease-out-apple)
+}
+.drag-bar.pinned .db-rect {
+  width: 40px;
+  height: 6px;
+  background-color: #6E5A2E;
+  opacity: 1;
+}
+.drag-bar.pinned:hover .db-rect {
+  background-color: #7d6b3f;
+}
+.drag-bar .ntf-short,
+.drag-bar .ntf-detail {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  /* No padding on top on purpose. The window gives this hint only a few pixels
+     above the drag bar -- in the compact densities --pad-y is 6, so the line box
+     is already level with the top edge and anything taller is clipped by the
+     window, not by this element. The 4px below (with `bottom` 4px lower, so the
+     text stays put) and the 6px at the sides hold the text shadow, which
+     `.ntf-clip`'s overflow would otherwise cut off. */
+  padding: 0 6px 4px;
+  /* Every layer is offset down at least as far as it blurs, so nothing reaches
+     above the letters, where the window edge is; it reaches 4px down and 2px
+     sideways, inside the padding. */
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45), 0 2px 2px rgba(0, 0, 0, 0.35);
+  transform: translateX(-50%) translateY(6px);
+  max-width: min(480px, calc(100vw - 48px));
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: var(--weight-semibold);
+  color: #fff;
+  white-space: nowrap;
+  /* Clipped only when the text is actually too long. `overflow: hidden` is what
+     the ellipsis needs and what chops the shadow off at the edges, so the class
+     is added from JS once a measurement says the text really does overflow --
+     most hints are short enough to keep their glow. */
+  overflow: visible;
+  text-align: center;
+  pointer-events: none;
+  /* Hidden by opacity, never by `visibility`. An element that is
+     `visibility: hidden` counts as not rendered, and Chromium refuses to start a
+     transition on one -- so the hint would appear with no animation at all.
+     Opacity leaves it rendered and every transition runs. */
+  opacity: 0;
+  filter: blur(6px);
+  transition:  opacity var(--t-fade, 0.18s) var(--ease-out-apple),
+    filter var(--t-blur, 0.22s) var(--ease-out-apple),
+    transform var(--t-move, 0.26s) var(--ease-out-apple);
+  z-index: 2;
+}
+.drag-bar .ntf-short.ntf-clip,
+.drag-bar .ntf-detail.ntf-clip {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* The type of the hint. It used to make no difference at all: an error and a
+   success looked the same on screen, and the only sign of which it was was how
+   long it stayed. The colour is not the only cue -- the line also gets a tint
+   of its own, so it reads without relying on hue alone. */
+.drag-bar .ntf-short,
+.drag-bar .ntf-detail {
+  --ntf-tint: #ffffff;
+}
+/* All white for now, until the palette is chosen. The old tints were
+   success #7fd6a2, error #ff9d9d, warn #f0c674, info #a8c8e8. */
+.drag-bar.success .ntf-short,
+.drag-bar.success .ntf-detail {
+  --ntf-tint: #ffffff;
+}
+.drag-bar.error .ntf-short,
+.drag-bar.error .ntf-detail {
+  --ntf-tint: #ffffff;
+}
+.drag-bar.warn .ntf-short,
+.drag-bar.warn .ntf-detail {
+  --ntf-tint: #ffffff;
+}
+.drag-bar.info .ntf-short,
+.drag-bar.info .ntf-detail {
+  --ntf-tint: #ffffff;
+}
+.drag-bar.notify .ntf-short,
+.drag-bar.notify .ntf-detail {
+  color: var(--ntf-tint);
+}
+.drag-bar.notify.shown:not(.expanded) .ntf-short,
+.drag-bar.notify.expanded.shown .ntf-detail {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateX(-50%) translateY(2px);
+}
+/* The resize handle: a vertical bar in the margin to the right of the search bar, drawn like
+   the drag bar's rectangle. The hit area is a little taller than the bar, and the bar only
+   shows while the pointer is in it, so it is there when you reach for it and gone otherwise. */
+.side-pill {
+  position: absolute;
+  top: calc(3 * var(--pad-y) + 16px - 8px);
+  right: 0;
+  width: var(--pad-x);
+  height: calc(var(--search-h) + 16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: nwse-resize;
+  flex-shrink: 0;
+  z-index: 6;
+}
+.sp-grip {
+  width: 6px;
+  height: 0;
+  border-radius: 100px;
+  background-color: rgba(178, 178, 178, 0.5);
+  opacity: 0;
+  transition: height var(--t-size, 0.3s) var(--ease-out-apple),
+    opacity var(--t-fade, 0.2s) var(--ease-out-apple),
+    background-color var(--t-color, 0.25s) var(--ease-out-apple);
+}
+.side-pill:hover .sp-grip,
+.side-pill.active .sp-grip {
+  height: 36px;
+  opacity: 1;
+  transition: height var(--t-size, 0.38s) var(--ease-out-apple),
+    opacity var(--t-fade, 0.3s) var(--ease-out-apple),
+    background-color var(--t-color, 0.3s) var(--ease-out-apple);
+}
+.side-pill.active .sp-grip {
+  background-color: var(--accent);
+}
+#search-box {
+  flex-shrink: 0;
+  height: var(--search-h);
+  margin: 0 var(--pad-x);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px 0 8px;
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  border: var(--card-border-w) solid var(--card-border);
+  box-shadow: var(--bar-shadow);
+  position: relative;
+  z-index: 2;
+}
+/* Settings → Appearance → Search bar gradient: the bar lightens towards its start, 14% of the way
+   to white. The start is opaque, so the blur behind the window cannot wash it out on a light card;
+   it eases into the card's own see-through colour by 65% of the width. */
+html[data-search-grad="on"] #search-box {
+  background: linear-gradient(to right,
+    rgb(from var(--card-bg) calc(r + (255 - r) * 0.14) calc(g + (255 - g) * 0.14) calc(b + (255 - b) * 0.14) / 1),
+    var(--card-bg) 65%);
+}
+#search-icon {
+  color: var(--icon);
+  flex-shrink: 0;
+  width: var(--search-icon);
+  height: var(--search-icon);
+  padding: calc(var(--search-icon) * 0.28);
+}
+#input-field {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+#ghost {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  white-space: pre;
+  font-size: 17px;
+  font-family: inherit;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
+  z-index: 0;
+}
+#ghost-typed {
+  color: transparent;
+}
+#ghost-rest {
+  color: var(--text-dim);
+}
+#search-input {
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text);
+  -webkit-text-fill-color: var(--text);
+  font-size: 17px;
+  font-family: inherit;
+  font-weight: var(--weight-medium);
+  line-height: 1.2;
+  letter-spacing: 0;
+  position: relative;
+  z-index: 1;
+  /* caret.js draws its own caret and selection, which move smoothly. */
+  caret-color: transparent;
+}
+#search-input::selection {
+  background: transparent;
+}
+#caret {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1.5px;
+  height: 21px;
+  border-radius: 1px;
+  background: var(--text);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transform: translate(0, -50%);
+  transition: transform calc(var(--t-move, 0.2s) * 0.5) var(--ease-out-apple), opacity var(--t-fade, 0.12s) var(--ease-out-apple);
+}
+#caret.on {
+  opacity: 1;
+  animation: caret-blink 1.2s ease-in-out infinite;
+}
+/* Moving, or resting after a while without input (caret.js): lit, not blinking. */
+#caret.on.moving,
+#caret.on.rest {
+  animation: none;
+}
+@keyframes caret-blink {
+  0%, 40% { opacity: 1; }
+  60%, 80% { opacity: 0; }
+  100% { opacity: 1; }
+}
+/* The selection sits behind the text, which the input still paints in its own colour. */
+#sel {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 24px;
+  width: 0;
+  border-radius: min(4px, var(--card-radius));
+  /* The system selection colour, i.e. whatever the user has set in Windows. */
+  background: color-mix(in srgb, Highlight 45%, transparent);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transform: translate(0, -50%);
+  transition: transform calc(var(--t-move, 0.2s) * 0.55) var(--ease-out-apple),
+    width calc(var(--t-move, 0.2s) * 0.55) var(--ease-out-apple),
+    opacity calc(var(--t-fade, 0.15s) * 0.6) var(--ease-out-apple);
+}
+#sel.on {
+  opacity: 1;
+}
+/* The example queries in the empty box (animatePlaceholder in main.js): each turns over to the
+   next like a drum, letter after letter, the old one rolling up out of a blur and the new one in
+   from below. Laid over the input where its text starts, like the ghost. */
+#ph-roll {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  color: var(--text-dim);
+  font-size: 17px;
+  font-weight: var(--weight-regular);
+  letter-spacing: 0;
+  white-space: pre;
+}
+#ph-roll .cr-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+}
+/* Text that turns over letter by letter (charRollTo in roll.js). */
+.cr-line {
+  white-space: pre;
+}
+.cr-ch {
+  display: inline-block;
+  transition: transform var(--t-move, 0.5s) var(--ease-out-apple),
+    opacity var(--t-fade, 0.35s) var(--ease-out-apple),
+    filter var(--t-blur, 0.5s) var(--ease-out-apple);
+}
+.cr-ch.below,
+.cr-ch.above {
+  opacity: 0;
+  filter: blur(var(--enter-blur));
+}
+.cr-ch.below {
+  transform: translateY(0.9em);
+}
+.cr-ch.above {
+  transform: translateY(-0.9em);
+}
+/* The hint over the drag bar turns over as one line (lineRollTo in roll.js): the new one comes up
+   from below, the old one is laid over it where it was, centred, and rolls up and away. */
+.lr-line {
+  display: inline-block;
+  transition: transform var(--t-move, 0.4s) var(--ease-out-apple),
+    opacity var(--t-fade, 0.3s) var(--ease-out-apple),
+    filter var(--t-blur, 0.4s) var(--ease-out-apple);
+}
+.lr-line.below {
+  transform: translateY(100%);
+  opacity: 0;
+  filter: blur(var(--enter-blur));
+}
+.lr-line.lr-out {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  animation: lr-out var(--t-move, 0.4s) var(--ease-out-apple) forwards;
+}
+/* Faded out within the first half and only half a line up: the window's top edge is a few pixels
+   above the hint, and a line rolling past it was cut off straight. */
+@keyframes lr-out {
+  50% {
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(-50%);
+    opacity: 0;
+    filter: blur(var(--enter-blur));
+  }
+}
+/* The animated example queries are the placeholder. Without this the input's
+   -webkit-text-fill-color paints them exactly like typed text. */
+#search-input::placeholder {
+  color: var(--text-dim);
+  -webkit-text-fill-color: var(--text-dim);
+  font-weight: var(--weight-regular);
+  opacity: 1;
+}
+#index-spinner {
+  height: var(--btn);
+  width: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--icon);
+  flex-shrink: 0;
+  /* The bar's 12px gap would still sit around a zero-width item: the negative margin
+     takes it back, so a hidden control leaves no hole. */
+  margin: 0 0 0 -12px;
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:  width var(--t-size, 0.2s) var(--ease-out-apple), margin var(--t-move, 0.2s) var(--ease-out-apple), opacity var(--t-fade, 0.2s) var(--ease-out-apple), visibility var(--t-fade, 0.2s) var(--ease-out-apple)
+}
+#index-spinner svg {
+  width: calc(var(--btn) * 0.58);
+  height: calc(var(--btn) * 0.58);
+  display: block;
+  flex-shrink: 0;
+}
+#index-spinner.visible {
+  width: var(--btn);
+  margin-left: 4px;
+  opacity: 0.9;
+  visibility: visible;
+  pointer-events: auto;
+}
+/* Update download progress: takes the indexing spinner's slot while it runs. */
+#index-spinner.suppressed {
+  width: 0;
+  margin: 0 0 0 -12px;
+  opacity: 0;
+  visibility: hidden;
+}
+#update-status,
+#update-btn {
+  height: var(--btn);
+  width: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin: 0 0 0 -12px;
+  padding: 0;
+  border: none;
+  border-radius: min(8px, var(--card-radius));
+  background: none;
+  color: var(--update-blue);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:  width var(--t-size, 0.2s) var(--ease-out-apple), margin var(--t-move, 0.2s) var(--ease-out-apple), opacity var(--t-fade, 0.2s) var(--ease-out-apple), visibility var(--t-fade, 0.2s) var(--ease-out-apple), background var(--t-color, 0.25s) var(--ease-out-apple)
+}
+#update-status svg {
+  width: calc(var(--btn) * 0.58);
+  height: calc(var(--btn) * 0.58);
+  flex-shrink: 0;
+}
+#update-status .ring-track {
+  opacity: 0.25;
+}
+#update-status .ring-fill {
+  stroke-dasharray: 0 60;
+  transition:  stroke-dasharray var(--t-size, 0.2s) var(--ease-out-apple)
+}
+#update-btn svg {
+  width: calc(var(--btn) * 0.62);
+  height: calc(var(--btn) * 0.62);
+  flex-shrink: 0;
+}
+#update-status.visible,
+#update-btn.visible {
+  width: var(--btn);
+  margin-left: 4px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+#update-btn.visible {
+  cursor: pointer;
+}
+#update-btn:hover {
+  background: var(--card-hover);
+}
+#clear-btn {
+  height: var(--btn);
+  width: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: min(8px, var(--card-radius));
+  background: transparent;
+  color: var(--icon);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: -12px;
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:  width var(--t-size, 0.2s) var(--ease-out-apple), margin var(--t-move, 0.2s) var(--ease-out-apple), opacity var(--t-fade, 0.2s) var(--ease-out-apple), visibility var(--t-fade, 0.2s) var(--ease-out-apple), background var(--t-color, 0.25s) var(--ease-out-apple), color var(--t-color, 0.25s) var(--ease-out-apple)
+}
+#clear-btn:hover {
+  color: var(--text);
+}
+#clear-btn.visible {
+  width: var(--btn);
+  margin-left: 0;
+  opacity: 0.85;
+  visibility: visible;
+  pointer-events: auto;
+}
+#clear-btn.visible:hover {
+  opacity: 1;
+  background: var(--card-hover);
+}
+#settings-btn {
+  width: var(--btn);
+  height: var(--btn);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: min(8px, var(--card-radius));
+  background: none;
+  color: var(--icon);
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  transition:  color var(--t-color, 0.25s) var(--ease-out-apple), transform var(--t-move, 0.3s) var(--ease-out-apple), background var(--t-color, 0.25s) var(--ease-out-apple)
+}
+#settings-btn svg {
+  /* Follows the search icon through the density modes (21px at its full 36px). */
+  width: calc(var(--search-icon) * 0.583);
+  height: calc(var(--search-icon) * 0.583);
+  /* The line scales with the icon like the search icon does: 2px at 21px, in drawing units. */
+  stroke-width: 2.29px;
+  display: block;
+}
+#settings-btn svg :is(path, circle) {
+  vector-effect: none;
+}
+#settings-btn:hover {
+  color: var(--text);
+}
+#settings-btn.open {
+  transform: rotate(90deg);
+}
+.settings-card {
+  display: flex;
+  flex-direction: column;
+  color: var(--text);
+  font-size: 14px;
+  cursor: default;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: var(--card-border-w) solid var(--card-border);
+  position: relative;
+  /* Room above the first row and below the last, and the same at both sides of every row. */
+  padding: 8px 0;
+}
+.settings-row {
+  display: flex;
+  align-items: center;
+  min-height: var(--card-h);
+  padding: 8px 20px;
+  gap: 12px;
+}
+.settings-row.interactive {
+  cursor: pointer;
+  transition:  background var(--t-color, 0.25s) var(--ease-out-apple)
+}
+.settings-row.interactive:hover {
+  background: var(--card-hover);
+}
+.settings-label {
+  font-size: 14px;
+  font-weight: var(--weight-medium);
+  color: var(--text);
+  min-width: 0;
+  white-space: nowrap;
+}
+.settings-value {
+  margin-left: auto;
+  color: var(--text-dim);
+  font-size: 13px;
+  font-weight: var(--weight-regular);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+#setting-hotkey-row.capturing .settings-value {
+  color: var(--accent);
+  animation: capture-pulse 1.2s ease infinite;
+}
+@keyframes capture-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+.zoom-stepper {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.zoom-stepper:has(+ .toggle) {
+  margin-left: auto;
+}
+.stepper-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: min(8px, var(--card-radius));
+  background: var(--card-deep);
+  color: var(--icon);
+  cursor: pointer;
+  font-family: var(--font-main);
+  font-size: 16px;
+  line-height: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:  background var(--t-color, 0.25s) var(--ease-out-apple), color var(--t-color, 0.25s) var(--ease-out-apple), transform var(--t-move, 0.1s) var(--ease-out-apple)
+}
+.stepper-btn:hover {
+  background: var(--card-hover);
+  color: var(--text);
+}
+.zoom-stepper > span {
+  min-width: 48px;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 13px;
+  font-weight: var(--weight-regular);
+  font-variant-numeric: tabular-nums;
+  cursor: ew-resize;
+  touch-action: none;
+  padding: 4px 0;
+  transition: color var(--t-color, 0.25s) var(--ease-out-apple);
+}
+.zoom-stepper > span:hover {
+  color: var(--text);
+}
+.toggle {
+  margin-left: auto;
+  width: 36px;
+  height: 20px;
+  border-radius: 10px;
+  background: var(--card-hover);
+  position: relative;
+  flex-shrink: 0;
+  transition:  background var(--t-color, 0.25s) var(--ease-out-apple)
+}
+.toggle-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text);
+  /* Moved, not re-laid out: a transform each frame instead of a new `left`. */
+  transition:  transform var(--t-move, 0.15s) var(--ease-out-apple)
+}
+.toggle.on {
+  background: var(--accent);
+}
+.toggle.on .toggle-knob {
+  transform: translateX(16px);
+}
+html[data-border-pos="inner"] :is(#search-box, .settings-card, #content-menu, #anim-menu, #color-picker, .cp-preview, #hint, .result-item, #context-menu, .special-card),
+html[data-border-pos="outer"] :is(#search-box, .settings-card, #content-menu, #anim-menu, #color-picker, .cp-preview, #hint, .result-item, #context-menu, .special-card) {
+  border-color: transparent;
+  outline-style: solid;
+  outline-color: var(--card-border);
+  outline-width: var(--card-border-w);
+}
+html[data-border-pos="inner"] :is(#search-box, .settings-card, #content-menu, #anim-menu, #color-picker, .cp-preview, #hint, .result-item, #context-menu, .special-card) {
+  outline-offset: calc(-1 * var(--card-border-w));
+}
+html[data-border-pos="outer"] :is(#search-box, .settings-card, #content-menu, #anim-menu, #color-picker, .cp-preview, #hint, .result-item, #context-menu, .special-card) {
+  outline-offset: 0;
+  /* Outside means outside: no border in the layout, so a wider line does not push the content in. */
+  border-width: 0;
+}
+.seg-row {
+  margin-left: auto;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  align-items: stretch;
+  gap: 2px;
+  padding: 3px;
+  border-radius: min(10px, var(--card-radius));
+  background: var(--card-deep);
+}
+.seg-btn {
+  box-sizing: border-box;
+  border: none;
+  background: none;
+  color: color-mix(in srgb, var(--text) 62%, transparent);
+  font-family: var(--font-main);
+  font-size: 12px;
+  font-weight: var(--weight-medium);
+  padding: 5px 12px;
+  border-radius: min(7px, var(--card-radius));
+  cursor: pointer;
+  transition:  background var(--t-color, 0.25s) var(--ease-out-apple), color var(--t-color, 0.25s) var(--ease-out-apple)
+}
+.seg-btn:hover {
+  color: var(--text);
+}
+.seg-btn.active {
+  background: var(--card-hover);
+  color: var(--text);
+}
+.settings-text-btn {
+  margin-left: 12px;
+  background: var(--card-deep);
+  border: none;
+  border-radius: min(8px, var(--card-radius));
+  color: var(--text);
+  font-family: var(--font-main);
+  font-size: 13px;
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  padding: 6px 12px;
+  transition:  background var(--t-color, 0.25s) var(--ease-out-apple), opacity var(--t-fade, 0.1s) var(--ease-out-apple)
+}
+.settings-text-btn:hover:not(:disabled) {
+  background: var(--card-hover);
+}
+.settings-text-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.settings-status {
+  padding: 4px 20px 12px 20px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-dim);
+}
+.settings-status:empty {
+  display: none;
+}
+.settings-status.error {
+  color: #C97A7A;
+}
+#content-menu,
+#anim-menu {
+  position: absolute;
+  /* Until placed above its row (positionContentMenu / positionAnimMenu): left where it falls in the
+     flow, below that row, it counted in the card's height, which grew a scroll and an empty end. */
+  top: 0;
+  right: 12px;
+  width: 232px;
+  z-index: 50;
+  padding: 6px;
+  /* Opaque: the blur sits under the whole window, so a see-through menu shows the rows of the
+     window itself through it. Same colour as the cards, without their transparency. */
+  background: rgb(from var(--card-bg) r g b / 1);
+  border: var(--card-border-w) solid var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 var(--glow-size) var(--glow-alpha);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.97) translateY(4px);
+  filter: blur(var(--enter-blur));
+  transform-origin: bottom right;
+  transition:  opacity var(--t-fade, 0.15s) var(--ease-out-apple), transform var(--t-move, 0.15s) var(--ease-out-apple), filter var(--t-blur, 0.15s) var(--ease-out-apple), visibility 0s linear var(--t-fade, 0.15s)
+}
+#content-menu.visible,
+#anim-menu.visible {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  filter: none;
+  transition:  opacity var(--t-fade, 0.15s) var(--ease-out-apple), transform var(--t-move, 0.15s) var(--ease-out-apple), filter var(--t-blur, 0.15s) var(--ease-out-apple), visibility 0s linear 0s
+}
+.exclude-chevron {
+  display: inline-block;
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1;
+  transition:  transform var(--t-move, 0.15s) var(--ease-out-apple)
+}
+#setting-exclude-row.open .exclude-chevron,
+#setting-anim-row.open .exclude-chevron {
+  transform: rotate(90deg);
+}
+.ms-head {
+  padding: 8px 12px 4px;
+  font-size: 12px;
+  font-weight: var(--weight-medium);
+  color: var(--text-dim);
+  cursor: default;
+  font-variant-numeric: tabular-nums;
+}
+.ms-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: max(4px, calc(var(--card-radius) - 6px));
+  cursor: pointer;
+  transition:  background var(--t-color, 0.25s) var(--ease-out-apple)
+}
+.ms-item:hover {
+  background: var(--card-hover);
+}
+/* "Select All" on folds every other item away; off, they come back. The items
+   sit in a plain block, so a folded one must not carry a margin: a negative one
+   collapsed through the block and left its bottom clipped by the menu. */
+.ms-item.ms-fold {
+  overflow: clip;
+  transition:  height var(--t-size, 0.24s) var(--ease-out-apple),
+    min-height var(--t-size, 0.24s) var(--ease-out-apple),
+    margin var(--t-size, 0.24s) var(--ease-out-apple),
+    opacity var(--t-fade, 0.18s) var(--ease-out-apple),
+    background var(--t-color, 0.25s) var(--ease-out-apple),
+    visibility 0s linear 0s
+}
+.ms-folded .ms-item.ms-fold {
+  height: 0;
+  min-height: 0;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition:  height var(--t-size, 0.24s) var(--ease-out-apple),
+    min-height var(--t-size, 0.24s) var(--ease-out-apple),
+    margin var(--t-size, 0.24s) var(--ease-out-apple),
+    opacity var(--t-fade, 0.18s) var(--ease-out-apple),
+    background var(--t-color, 0.25s) var(--ease-out-apple),
+    visibility 0s linear var(--t-size, 0.24s)
+}
+/* Applied on first paint of a menu, so it opens already folded instead of
+   playing the fold. */
+.ms-instant .ms-item.ms-fold {
+  transition: none
+}
+.ms-tick {
+  margin-left: auto;
+  width: 16px;
+  height: 16px;
+  color: var(--accent);
+  flex-shrink: 0;
+  opacity: 0;
+  transform: scale(0.5);
+  transition:  opacity var(--t-fade, 0.12s) var(--ease-out-apple), transform var(--t-move, 0.12s) var(--ease-out-apple)
+}
+.ms-tick svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.ms-item.checked .ms-tick {
+  opacity: 1;
+  transform: none;
+}
+.ms-label {
+  font-size: 13px;
+  font-weight: var(--weight-regular);
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+/* Colour widget ("#c83939", color.js), from the App-Paper-picker Figma frame. */
+.color-card {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  padding: 10px;
+}
+.cc-preview {
+  display: flex;
+  flex-shrink: 0;
+  width: 168px;
+  height: 165px;
+}
+.cc-shades {
+  display: flex;
+  flex-direction: column;
+  width: 23px;
+}
+.cc-shade {
+  flex: 1;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+}
+.cc-shade:first-child {
+  border-top-left-radius: min(8px, var(--card-radius));
+}
+.cc-shade:last-child {
+  border-bottom-left-radius: min(8px, var(--card-radius));
+}
+.cc-shade,
+.cc-swatch,
+.cc-chip {
+  transition: background-color var(--t-color, 0.28s) var(--ease-out-apple), box-shadow var(--t-color, 0.25s) var(--ease-out-apple);
+}
+/* Eyedropper frames come ~30 times a second; easing them would only lag behind the cursor. */
+.color-card.picking .cc-shade,
+.color-card.picking .cc-swatch,
+.color-card.picking .cc-hex {
+  transition: none;
+}
+.cc-shade:hover {
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.35);
+}
+.cc-shade.active {
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.75);
+}
+.cc-swatch {
+  position: relative;
+  flex: 1;
+  border-radius: 0 min(8px, var(--card-radius)) min(8px, var(--card-radius)) 0;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+/* The colour's hex, written on its own swatch in whichever of near-black / white reads. */
+.cc-hex {
+  position: absolute;
+  right: 11px;
+  bottom: 8px;
+  font-family: var(--font-num);
+  font-size: 22px;
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  color: var(--cc-ink, #fff);
+  pointer-events: none;
+  transition: color var(--t-color, 0.28s) var(--ease-out-apple);
+}
+.cc-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.cc-field[data-copy] {
+  cursor: pointer;
+}
+.cc-label {
+  font-size: 16px;
+  font-weight: var(--weight-medium);
+  color: var(--text-dim);
+}
+.cc-value {
+  font-family: var(--font-num);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cc-history {
+  display: flex;
+  gap: 4px;
+  margin-top: 2px;
+  min-height: 18px;
+}
+.cc-chip {
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: min(4px, var(--card-radius));
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+.cc-chip.cc-new {
+  animation: cc-chip-in var(--t-size, 0.22s) var(--ease-out-apple) both;
+}
+@keyframes cc-chip-in {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+.cc-loupe {
+  position: relative;
+  flex-shrink: 0;
+  width: 168px;
+  height: 165px;
+  border-radius: min(8px, var(--card-radius));
+  overflow: hidden;
+  background: var(--card-deep);
+}
+.cc-loupe canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+/* Dot-grid placeholder while nothing has been picked (drawn by colorStartSkeleton).
+   The dropper comes later in the markup, so it stays on top. */
+.cc-loupe .cc-skeleton {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: auto;
+  pointer-events: none;
+}
+.cc-loupe .cc-skeleton {
+  transition: opacity var(--t-fade, 0.3s) var(--ease-out-apple);
+}
+.cc-loupe.has-capture .cc-skeleton {
+  opacity: 0;
+}
+/* The capture is COLOR_GRID cells wide (color.js); zooming is a scale of the whole canvas
+   about the pin, eased, and the loupe clips what spills out. */
+.cc-loupe .cc-pixels {
+  opacity: 0;
+  transform-origin: 50% 50%;
+  transition: transform var(--t-size, 0.3s) var(--ease-out-apple), opacity var(--t-fade, 0.3s) var(--ease-out-apple);
+}
+.cc-loupe.has-capture .cc-pixels {
+  opacity: 1;
+}
+/* Zoom buttons (bottom left) and "remove the screenshot" (top right) appear with the pointer. */
+.cc-tools {
+  position: absolute;
+  left: 8px;
+  bottom: 7px;
+  display: flex;
+  gap: 4px;
+}
+.cc-clear {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+}
+.cc-tools,
+.cc-clear {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-fade, 0.2s) var(--ease-out-apple);
+}
+.cc-loupe.has-capture:hover .cc-tools,
+.cc-loupe.has-capture:hover .cc-clear,
+.cc-loupe.has-capture:focus-within .cc-tools,
+.cc-loupe.has-capture:focus-within .cc-clear {
+  opacity: 1;
+  pointer-events: auto;
+}
+.cc-tool {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: none;
+  border-radius: min(8px, var(--card-radius));
+  background: color-mix(in srgb, var(--card-bg) 82%, transparent);
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: background var(--t-color, 0.25s) var(--ease-out-apple), opacity var(--t-fade, 0.15s) var(--ease-out-apple), transform var(--t-move, 0.12s) var(--ease-out-apple);
+}
+.cc-tool:hover:not(:disabled) {
+  background: var(--card-hover);
+}
+.cc-tool:active:not(:disabled) {
+  transform: scale(0.9);
+}
+.cc-tool:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.cc-pin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -100%);
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.35));
+  pointer-events: none;
+  opacity: 0;
+}
+.cc-loupe.has-capture .cc-pin {
+  opacity: 1;
+}
+.cc-dropper {
+  position: absolute;
+  right: 9px;
+  bottom: 7px;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  background: none;
+  /* Drawn from the text colour so it reads on the empty loupe in every theme; it used
+     to be a fixed grey that vanished into the light ones. */
+  color: color-mix(in srgb, var(--text) 62%, transparent);
+  cursor: pointer;
+  transition: color var(--t-color, 0.25s) var(--ease-out-apple);
+}
+.cc-dropper:hover,
+.color-card.picking .cc-dropper {
+  color: var(--text);
+}
+.color-card.picking .cc-loupe {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+/* The eyedropper bar: while picking, the search box and the card fold up out of the way and
+   this small bar (color.js) takes the search box's place. */
+#app-container > #search-box,
+#app-container > #pin-dock {
+  transition: opacity var(--t-fade, 0.28s) var(--ease-out-apple), transform var(--t-move, 0.4s) var(--ease-out-apple);
+}
+#app-container > #results-wrapper {
+  transform-origin: 50% 0;
+  transition: --mask-top var(--t-fade, 0.2s) var(--ease-out-apple), opacity var(--t-fade, 0.28s) var(--ease-out-apple), transform var(--t-move, 0.4s) var(--ease-out-apple);
+}
+#app-container.color-compact > #search-box {
+  opacity: 0;
+  transform: translateY(-14px) scale(0.97);
+  pointer-events: none;
+}
+#app-container.color-compact > #results-wrapper {
+  opacity: 0;
+  transform: translateY(-70px) scale(0.9, 0.25);
+  pointer-events: none;
+}
+#app-container.color-compact > #pin-dock,
+#app-container.color-compact > .side-pill,
+#app-container.color-compact > .drag-bar {
+  opacity: 0;
+  pointer-events: none;
+}
+#cc-pill {
+  position: absolute;
+  top: calc(3 * var(--pad-y) + 16px);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 312px;
+  height: var(--search-h);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 8px 0 7px;
+  background: var(--card-bg);
+  border: var(--card-border-w) solid var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--bar-shadow);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-18px) scale(0.92);
+  transform-origin: 50% 0;
+  transition: opacity var(--t-fade, 0.2s) var(--ease-out-apple), transform var(--t-move, 0.4s) var(--ease-out-apple), visibility 0s linear var(--t-move, 0.4s);
+}
+#cc-pill.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+  transition: opacity var(--t-fade, 0.28s) var(--ease-out-apple) 0.08s, transform var(--t-move, 0.4s) var(--ease-out-apple) 0.08s, visibility 0s;
+}
+#cc-pill {
+  left: var(--room-l);
+  right: var(--room-r);
+}
+.ccp-swatch {
+  flex-shrink: 0;
+  width: calc(var(--search-h) - 14px);
+  height: calc(var(--search-h) - 14px);
+  border-radius: min(8px, var(--card-radius));
+  background: var(--card-deep);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  transition: background var(--t-color, 0.25s) var(--ease-out-apple);
+}
+.ccp-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.ccp-hex {
+  font-family: var(--font-num);
+  font-size: 20px;
+  font-weight: var(--weight-medium);
+  line-height: 22px;
+  color: var(--text);
+  white-space: nowrap;
+}
+.ccp-sub {
+  font-size: 12px;
+  line-height: 14px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ccp-btn {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: none;
+  border-radius: min(8px, var(--card-radius));
+  background: none;
+  color: var(--icon);
+  cursor: pointer;
+  transition: background var(--t-color, 0.25s) var(--ease-out-apple), color var(--t-color, 0.25s) var(--ease-out-apple);
+}
+.ccp-btn:hover {
+  background: var(--card-hover);
+  color: var(--text);
+}
+/* The settings are several plates one under the other, grouped by what they are about. */
+.settings-card + .settings-card {
+  margin-top: var(--gap);
+}
+.settings-card.filtered-out {
+  display: none;
+}
+/* Extra controls that sit in a row beside its switch; they fold sideways with the switch off. */
+.row-extras {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 420px;
+  overflow: clip;
+  transition: max-width var(--t-size, 0.26s) var(--ease-out-apple), opacity var(--t-fade, 0.2s) var(--ease-out-apple),
+    visibility 0s linear 0s;
+}
+.row-extras + .toggle,
+.swatch-custom + .toggle {
+  margin-left: 0;
+}
+.row-extras.dep-hidden {
+  max-width: 0;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: max-width var(--t-size, 0.26s) var(--ease-out-apple), opacity var(--t-fade, 0.2s) var(--ease-out-apple),
+    visibility 0s linear var(--t-size, 0.26s);
+}
+/* Every icon is drawn at one stroke weight in screen pixels, whatever size it is shown at, so a
+   menu icon and a 32 px placeholder carry the same 2 px line as the search icon. The drawing
+   fills 18 of the 24 units of its box, so a 21 px box puts a 16 px glyph on screen, the size
+   of the search icon's. */
+:root {
+  --ico-size: 21px;
+}
+.ico {
+  stroke-width: var(--ico-stroke, 2px);
+}
+.ico :is(path, circle, rect, line, polyline, polygon, ellipse) {
+  vector-effect: non-scaling-stroke;
+}
+/* Staggered entrance for the settings rows. */
+#settings-section:not(.hidden) .settings-row {
+  animation: result-enter var(--t-move, 0.55s) var(--ease-out-apple) both;
+}
+#settings-section:not(.hidden) .settings-row:nth-child(1) { animation-delay: 0.02s; }
+#settings-section:not(.hidden) .settings-row:nth-child(2) { animation-delay: 0.045s; }
+#settings-section:not(.hidden) .settings-row:nth-child(3) { animation-delay: 0.07s; }
+#settings-section:not(.hidden) .settings-row:nth-child(4) { animation-delay: 0.095s; }
+#settings-section:not(.hidden) .settings-row:nth-child(5) { animation-delay: 0.12s; }
+#settings-section:not(.hidden) .settings-row:nth-child(6) { animation-delay: 0.145s; }
+#settings-section:not(.hidden) .settings-row:nth-child(7) { animation-delay: 0.17s; }
+#settings-section:not(.hidden) .settings-row:nth-child(8) { animation-delay: 0.195s; }
+#settings-section:not(.hidden) .settings-row:nth-child(9) { animation-delay: 0.22s; }
+#settings-section:not(.hidden) .settings-row:nth-child(10) { animation-delay: 0.245s; }
+#settings-section:not(.hidden) .settings-row:nth-child(11) { animation-delay: 0.27s; }
+#settings-section:not(.hidden) .settings-row:nth-child(12) { animation-delay: 0.295s; }
+#settings-section:not(.hidden) .settings-row:nth-child(13) { animation-delay: 0.32s; }
+#settings-section:not(.hidden) .settings-row:nth-child(14) { animation-delay: 0.345s; }
+#settings-section:not(.hidden) .settings-row:nth-child(15) { animation-delay: 0.37s; }
+#settings-section:not(.hidden) .settings-row:nth-child(16) { animation-delay: 0.395s; }
+#settings-section:not(.hidden) .settings-row:nth-child(17) { animation-delay: 0.42s; }
+#settings-section:not(.hidden) .settings-row:nth-child(18) { animation-delay: 0.445s; }
+#settings-section:not(.hidden) .settings-row:nth-child(19) { animation-delay: 0.47s; }
+#settings-section:not(.hidden) .settings-row:nth-child(20) { animation-delay: 0.495s; }
+#settings-section:not(.hidden) .settings-row:nth-child(21) { animation-delay: 0.52s; }
+#settings-section:not(.hidden) .settings-row:nth-child(22) { animation-delay: 0.545s; }
+#settings-section:not(.hidden) .settings-row:nth-child(23) { animation-delay: 0.57s; }
+#settings-section:not(.hidden) .settings-row:nth-child(24) { animation-delay: 0.595s; }
+#settings-section:not(.hidden) .settings-row:nth-child(25) { animation-delay: 0.62s; }
+.stepper-btn:active,
+.swatch:active,
+.swatch-custom:active,
+#settings-btn:active {
+  transform: scale(0.88);
+}
+/* Pressed while open, the gear keeps its quarter turn: it only turns back on release, like it turns on release when opening. */
+#settings-btn.open:active {
+  transform: rotate(90deg) scale(0.88);
+}
+.swatch {
+  transition:  transform var(--t-move, 0.12s) var(--ease-out-apple), box-shadow var(--t-glow, 0.12s) var(--ease-out-apple)
+}
+/* Pinned apps dock (dock.js). The window grows by --dock-reserve on the dock's
+   side; tiles hug the panel 12px away and grow outward to show the app name.
+   The first tile is centred on the search bar, the rest line up with the rows. */
+html[data-pins="left"],
+html[data-pins="right"] {
+  --dock-reserve: 168px;
+}
+:root {
+  /* The theme panel's card, and the room it takes beside the window (TP_RESERVE in themepanel.js). */
+  /* The card fills the room but for Row Spacing, the gap it keeps from the column. */
+  --tp-w: calc(var(--tp-reserve) - var(--gap));
+  --tp-reserve: 496px;
+  --dock-l: 0px;
+  --dock-r: 0px;
+  --tp-l: 0px;
+  --tp-r: 0px;
+  --room-l: calc(var(--dock-l) + var(--tp-l));
+  --room-r: calc(var(--dock-r) + var(--tp-r));
+}
+html[data-pins="left"] { --dock-l: var(--dock-reserve); }
+html[data-pins="right"] { --dock-r: var(--dock-reserve); }
+html[data-tp="left"] { --tp-l: var(--tp-reserve); }
+html[data-tp="right"] { --tp-r: var(--tp-reserve); }
+#app-container {
+  padding-left: var(--room-l);
+  padding-right: var(--room-r);
+}
+html[data-pins="left"] #pins-section,
+html[data-pins="right"] #pins-section {
+  display: none;
+}
+.side-pill {
+  right: var(--room-r);
+}
+#pin-dock {
+  position: absolute;
+  /* Level with the search bar: #app-container's padding-top (--pad-y), the drag bar
+     (--pad-y + 20px) and its bottom margin (--pad-y - 4px). Computed rather than measured
+     so it follows the animated density change instead of catching its first frame. */
+  top: calc(3 * var(--pad-y) + 16px);
+  bottom: 0;
+  /* Ten pixels wider than the tiles need, all of it on the side facing the list.
+     The dock is a scroll container, so it clips whatever its children paint past
+     the padding box -- and the tiles sit hard against that edge, which cut their
+     glow off with a straight vertical edge. The padding is the room the shadow
+     needs and the extra width cancels it, so the tiles do not move. */
+  width: calc(var(--dock-reserve) + var(--pad-x) - 12px + 10px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--gap);
+  padding-top: 8px;
+  padding-bottom: var(--gap);
+  margin-top: -8px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+#pin-dock::-webkit-scrollbar {
+  display: none;
+}
+#pin-dock[hidden] {
+  display: none;
+}
+/* Theme panel (themepanel.js): a card of the appearance settings beside the window, level with the
+   search bar, on the side away from the dock. It appears once the window has grown. */
+#theme-panel {
+  position: absolute;
+  top: calc(3 * var(--pad-y) + 16px);
+  bottom: 12px;
+  width: var(--tp-w);
+  display: none;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  filter: blur(var(--enter-blur));
+  transition: opacity var(--t-fade, 0.2s) var(--ease-out-apple), transform var(--t-move, 0.32s) var(--ease-out-apple), filter var(--t-blur, 0.32s) var(--ease-out-apple), visibility 0s linear var(--t-fade, 0.2s);
+}
+/* Two cards in one panel, one shown at a time: the second is not a plate under the first, so the
+   gap .settings-card + .settings-card puts above it pushed Appearance below the search bar. */
+#theme-panel > .settings-card {
+  margin-top: 0;
+}
+html[data-tp="right"] #theme-panel {
+  display: flex;
+  right: var(--pad-x);
+  transform: translateX(-14px);
+}
+html[data-tp="left"] #theme-panel {
+  display: flex;
+  left: var(--pad-x);
+  transform: translateX(14px);
+}
+html[data-tp] #theme-panel.show {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  filter: none;
+  transition: opacity var(--t-fade, 0.2s) var(--ease-out-apple), transform var(--t-move, 0.32s) var(--ease-out-apple), filter var(--t-blur, 0.32s) var(--ease-out-apple), visibility 0s;
+}
+#theme-card,
+#keys-card {
+  flex: 0 1 auto;
+  max-height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--card-hover) transparent;
+}
+/* The card scrolls when the window is not tall enough; its rows keep their height. */
+#theme-card > *,
+#keys-card > * {
+  flex-shrink: 0;
+}
+#theme-panel[data-view="keys"] #theme-card,
+#theme-panel:not([data-view="keys"]) #keys-card {
+  display: none;
+}
+#setting-theme-row .exclude-chevron,
+#setting-keys-row .exclude-chevron {
+  margin-left: auto;
+}
+#setting-theme-row.open .exclude-chevron,
+#setting-keys-row.open .exclude-chevron {
+  transform: rotate(180deg);
+}
+/* Keybinds view (keybinds.js): a row per action, its keys as keycaps on the right. */
+#keys-card .settings-label {
+  flex: 1 1 auto;
+}
+.kb-keys {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow: visible;
+}
+.kb-row .kb-reset {
+  display: none;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-left: 6px;
+  padding: 0;
+  border: none;
+  border-radius: min(8px, var(--card-radius));
+  background: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: background var(--t-color, 0.25s) var(--ease-out-apple), color var(--t-color, 0.25s) var(--ease-out-apple);
+}
+.kb-row.changed .kb-reset {
+  display: flex;
+}
+.kb-row .kb-reset:hover {
+  background: var(--card-hover);
+  color: var(--text);
+}
+.kb-fixed {
+  opacity: 0.7;
+}
+.kb-row.capturing {
+  animation: hk-ring 1.5s ease-out infinite;
+}
+/* The card is wide enough for every row on one line; the font row, which grows with the fonts added
+   with !font, puts its choices on a line of their own. The card's own padding comes from
+   .settings-card. */
+#theme-card .settings-label {
+  flex: 1 1 auto;
+}
+#theme-card .settings-row:has(> #font-seg) {
+  flex-wrap: wrap;
+  row-gap: 6px;
+}
+#theme-card #font-seg {
+  flex: 1 1 100%;
+  margin-left: 0;
+}
+
+html[data-pins="left"] #pin-dock {
+  left: 0;
+  /* The room for the tile shadow, on the edge that faces the list. */
+  padding-right: 10px;
+}
+html[data-pins="right"] #pin-dock {
+  right: 0;
+  align-items: flex-start;
+  padding-left: 10px;
+}
+#pin-dock.drop-target {
+  outline: 2px dashed var(--accent);
+  outline-offset: -2px;
+  border-radius: var(--card-radius);
+}
+/* Tiles are square and exactly as tall as what they sit next to: the search bar for
+   the first one, a result row for the rest, in every density mode. The side padding
+   makes the collapsed width equal that height (the border is inside the box). */
+.dock-tile {
+  --tile-h: var(--card-h);
+  --dock-pad: calc((var(--tile-h) - var(--result-icon)) / 2 - var(--card-border-w));
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  max-width: 100%;
+  height: var(--tile-h);
+  padding: 0 var(--dock-pad);
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  border: var(--card-border-w) solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  cursor: pointer;
+  /* No `transform` here on purpose. The dock is a Sortable drag target and the
+     library writes transform inline on every pointer move; transitioning it
+     would make every one of those moves animate and the tile would trail behind
+     the cursor. The hover lift is done with colour instead. */
+  transition:  background-color var(--t-color, 0.25s) var(--ease-out-apple),
+    padding var(--t-move, 0.2s) var(--ease-out-apple),
+    box-shadow var(--t-glow, 0.25s) var(--ease-out-apple)
+}
+.dock-tile:hover {
+  background: color-mix(in srgb, var(--card-bg) 88%, var(--text));
+  box-shadow: var(--card-shadow), 0 0 0 1px var(--card-border);
+}
+.dock-tile:first-child {
+  --tile-h: var(--search-h);
+}
+html[data-pins="right"] .dock-tile {
+  flex-direction: row-reverse;
+}
+.dock-tile:hover {
+  background: var(--card-hover);
+}
+html[data-pins="left"] .dock-tile:not(.dock-empty):hover {
+  padding-left: 18px;
+}
+html[data-pins="right"] .dock-tile:not(.dock-empty):hover {
+  padding-right: 18px;
+}
+.dock-label {
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 15px;
+  font-weight: var(--weight-medium);
+  color: var(--text);
+  transition:  max-width var(--t-size, 0.2s) var(--ease-out-apple), opacity var(--t-fade, 0.15s) var(--ease-out-apple), margin var(--t-move, 0.2s) var(--ease-out-apple)
+}
+.dock-tile:hover .dock-label {
+  max-width: 92px;
+  opacity: 1;
+}
+html[data-pins="left"] .dock-tile:hover .dock-label {
+  margin-right: 18px;
+}
+html[data-pins="right"] .dock-tile:hover .dock-label {
+  margin-left: 18px;
+}
+/* Switching the pins to a dock (dock.js adds .dock-appear for a moment): the tiles
+   slide in from the window's edge one after another. */
+.dock-appear .dock-tile:not(.dock-empty) {
+  animation: dock-tile-in var(--t-move, 0.34s) var(--ease-out-apple) both;
+  animation-delay: calc(var(--i, 0) * 35ms);
+}
+@keyframes dock-tile-in {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+}
+html[data-pins="right"] .dock-appear .dock-tile:not(.dock-empty) {
+  animation-name: dock-tile-in-r;
+}
+@keyframes dock-tile-in-r {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+}
+/* The "+" drop slot only appears while a result row or a file is being dragged. */
+.dock-empty {
+  display: none;
+  border-style: dashed;
+  box-shadow: none;
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 20px;
+  cursor: default;
+}
+#pin-dock.drag-active .dock-empty {
+  display: flex;
+}
+.dock-tile.sortable-ghost {
+  opacity: 0.35;
+}
+/* While a result row hovers the dock, Sortable puts the row itself in the column as the
+   drop placeholder; show just its icon, shaped like a tile, instead of a clipped row. */
+#pin-dock > .result-item,
+body > .result-item.sortable-fallback {
+  width: auto !important;
+  gap: 0;
+  padding: 0 calc((var(--card-h) - var(--result-icon)) / 2 + 2px);
+  animation: none;
+  opacity: 0.6;
+}
+#pin-dock > .result-item > :not(.result-icon),
+body > .result-item.sortable-fallback > :not(.result-icon) {
+  display: none;
+}
+/* Rows have a transform transition, which made the copy trail at half the cursor's speed
+   (see .pin-drag-copy). */
+body > .result-item.sortable-fallback {
+  transition: none;
+}
+/* Custom scrollbar — the native one is hidden on #results-container. */
+#custom-scrollbar {
+  position: absolute;
+  top: var(--gap);
+  right: 4px;
+  bottom: 12px;
+  width: 12px;
+  border-radius: 6px;
+  background: transparent;
+  opacity: 1;
+  pointer-events: auto;
+  transition:  opacity var(--t-fade, 0.2s) var(--ease-out-apple), background var(--t-color, 0.25s) var(--ease-out-apple);
+  z-index: 5;
+}
+#custom-scrollbar.hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+#custom-thumb {
+  position: absolute;
+  left: 3px;
+  top: 0;
+  width: 6px;
+  border-radius: 3px;
+  background: rgba(178, 178, 178, 0.55);
+  cursor: grab;
+  transition:  background var(--t-color, 0.25s) var(--ease-out-apple);
+  will-change: transform, height;
+}
+#custom-scrollbar:hover #custom-thumb,
+#custom-scrollbar.visible #custom-thumb {
+  background: rgba(178, 178, 178, 0.85);
+}
+#custom-scrollbar.dragging #custom-thumb {
+  background: rgba(227, 227, 227, 0.95);
+  cursor: grabbing;
+}
+@property --mask-top {
+  syntax: '<length>';
+  initial-value: 0px;
+  inherits: false;
+}
+/* Fade the top edge once the list has been scrolled. */
+#results-wrapper {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  /* 6px of the gap moved inside the list (padding-top below): the list clips what leaves it, and
+     the first row's shadow reaches 6px up. */
+  margin-top: max(0px, calc(var(--gap) - 6px));
+  --mask-top: 0px;
+  /* Over the search bar (z-index 2), so its shadow falls on the gap under it and not across the
+     first row -- the way each row covers the shadow of the one above. */
+  z-index: 3;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black var(--mask-top), black calc(100% - 12px), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black var(--mask-top), black calc(100% - 12px), transparent 100%);
+  transition:  --mask-top var(--t-fade, 0.2s) var(--ease-out-apple)
+}
+#results-wrapper.is-scrolled {
+  --mask-top: 12px;
+}
+#results-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  overflow-y: scroll;
+  padding: 6px var(--pad-x) var(--gap);
+}
+#results-container::-webkit-scrollbar {
+  display: none;
+}
+.section,
+#results-list,
+#pins-list,
+#special-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  flex-shrink: 0;
+}
+.section.hidden {
+  display: none;
+}
+#empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px 0;
+  color: var(--text-dim);
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: var(--weight-medium);
+  animation: result-enter var(--t-move, 0.55s) var(--ease-out-apple) both;
+}
+#empty-state.hidden {
+  display: none;
+}
+#empty-state svg {
+  opacity: 0.4;
+}
+.result-item {
+  display: flex;
+  align-items: center;
+  height: var(--card-h);
+  padding: 0 8px;
+  gap: 12px;
+  cursor: pointer;
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  border: var(--card-border-w) solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  transition:  background-color var(--t-color, 0.25s) var(--ease-out-apple), box-shadow var(--t-glow, 0.25s) var(--ease-out-apple), transform var(--t-move, 0.15s) var(--ease-out-apple), margin-right var(--t-size, 0.26s) var(--ease-out-apple);
+  flex-shrink: 0;
+  animation: result-enter var(--t-move, 0.55s) var(--ease-out-apple) both;
+}
+@keyframes result-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(var(--enter-blur));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: none;
+  }
+}
+.result-item:hover {
+  background: var(--card-hover);
+}
+.result-item.selected {
+  background: var(--card-selected);
+  box-shadow: var(--card-shadow);
+}#pins-list .result-item {
+  user-select: none;
+}
+/* A row being removed from the list (collapseRow in main.js). */
+.result-item.row-collapsing {
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.96);
+  border-color: transparent;
+  box-shadow: none;
+  transition: height var(--t-size, 0.28s) var(--ease-out-apple), margin-bottom var(--t-size, 0.28s) var(--ease-out-apple),
+    opacity var(--t-fade, 0.2s) var(--ease-out-apple), transform var(--t-move, 0.28s) var(--ease-out-apple), box-shadow var(--t-glow, 0.2s) var(--ease-out-apple);
+}
+.result-item.sortable-ghost {
+  opacity: 0.4;
+  background-color: var(--card-bg) !important;
+}
+/* The copy of a pin that follows the cursor. Sortable moves it with an inline transform and
+   adds each mouse step to the transform it reads back, so a transform transition (rows have
+   one) would make it trail behind the cursor; the lift uses the separate scale property. */
+body > .result-item.pin-drag-copy {
+  cursor: grabbing;
+  opacity: 1 !important;
+  scale: 0.97;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.2);
+  animation: none;
+  transition: none;
+}
+.result-icon {
+  width: var(--result-icon);
+  height: var(--result-icon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.result-icon img {
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--result-icon) * 0.28);
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+.result-icon-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: calc(var(--result-icon) * 0.28);
+  box-shadow: var(--tile-shadow);
+}
+.result-icon-fallback.app,
+.result-icon-fallback.shortcut,
+.result-icon-fallback.code,
+.result-icon-fallback.file {
+  background: var(--tile-exe);
+}
+.result-icon-fallback.folder {
+  background: var(--tile-folder);
+}
+.result-icon-fallback.image,
+.result-icon-fallback.video {
+  background: var(--tile-media);
+}
+.result-icon-fallback.audio {
+  background: #A05C86;
+}
+.result-icon-fallback.document {
+  background: #4C8A6E;
+}
+.result-icon-fallback.archive {
+  background: #9A6B3C;
+}
+.result-icon-fallback svg {
+  width: 55%;
+  height: 55%;
+  color: white;
+}
+.result-icon-fallback .glyph-text {
+  font-family: var(--font-main);
+  font-size: calc(var(--result-icon) * 0.28);
+  font-weight: var(--weight-medium);
+  color: white;
+  letter-spacing: 0;
+}
+.result-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: var(--weight-medium);
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 20px;
+}
+.result-name mark {
+  background: var(--accent);
+  color: inherit;
+  border-radius: min(4px, var(--card-radius));
+  padding: 0 2px;
+  margin: 0;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.result-icon.icon-skeleton {
+  background: rgba(128, 128, 128, 0.25);
+  border-radius: calc(var(--result-icon) * 0.28);
+  animation: skeleton-pulse 1.2s ease-in-out infinite;
+}
+.result-icon.icon-skeleton img,
+.result-icon.icon-skeleton .result-icon-fallback {
+  display: none;
+}
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.15;
+  }
+}
+.result-path {
+  display: flex;
+  justify-content: flex-end;
+  flex-shrink: 1;
+  min-width: 0;
+  max-width: 40%;
+  font-size: 15px;
+  font-weight: var(--weight-regular);
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right;
+  line-height: 20px;
+  margin-left: 8px;
+  /* Keeps closed-pin text off the card edge; the pin margins below cancel it when the pin opens. */
+  margin-right: 6px;
+}
+.rp-head {
+  min-width: 0;
+  flex: 0 1000 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* When even the last two segments do not fit, they give way from the front, so the file name and its
+   folder stay readable: "…plicationchrome.exe", not "Applicationchro…". The block is
+   right-to-left only to put the ellipsis on the left; the path inside keeps its own order. */
+.rp-tail {
+  min-width: 0;
+  flex: 0 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  direction: rtl;
+}
+.rp-tail > bdi {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+.result-pin {
+  /* Closed, the pin is 0 wide and its -12px margin cancels the row gap, so the path sits where
+     the button will be; the row opens it on hover and the path slides left to make room. */
+  width: 0;
+  margin-left: -12px;
+  overflow: hidden;
+  height: 28px;
+  border: none;
+  border-radius: min(8px, var(--card-radius));
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  opacity: 0;
+  transition:  opacity var(--t-fade, 0.15s) var(--ease-out-apple), width var(--t-move, 0.24s) var(--ease-out-apple), margin-left var(--t-move, 0.24s) var(--ease-out-apple), transform var(--t-move, 0.2s) var(--ease-out-apple), background var(--t-color, 0.25s) var(--ease-out-apple)
+}
+.result-pin svg {
+  flex-shrink: 0;
+}
+/* Ctrl held: rows 1-9 push their icon and name aside and show the Ctrl+number in
+   the room that opens up. Closed, the box is 0 wide with a -12px margin that
+   cancels the row's gap, so nothing moves. */
+.result-num {
+  width: 0;
+  margin-right: -12px;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-align: center;
+  font-size: 14px;
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+  opacity: 0;
+  pointer-events: none;
+  transition: width var(--t-move, 0.2s) var(--ease-out-apple),
+    margin var(--t-move, 0.2s) var(--ease-out-apple),
+    opacity var(--t-fade, 0.18s) var(--ease-out-apple)
+}
+.show-shortcuts .result-item[data-shortcut] .result-num {
+  width: 14px;
+  margin-right: 0;
+  opacity: 1;
+}
+/* A setting that another one makes pointless is not shown at all, rather than
+   greyed out: "Match Windows" decides the colours, so the pickers go; with the
+   border off there is no width or style to choose. main.js puts .dep-hidden on
+   the row (applyTheme); the row folds away and comes back the same way.
+   Height goes to and from `auto`, which needs interpolate-size (older engines
+   just switch at once). */
+:root {
+  interpolate-size: allow-keywords;
+}
+.settings-row.dep-row {
+  overflow: clip;
+  /* The enter animation fills forwards and would hold opacity at 1. */
+  animation-fill-mode: backwards;
+  transition:  height var(--t-size, 0.26s) var(--ease-out-apple),
+    min-height var(--t-size, 0.26s) var(--ease-out-apple),
+    padding var(--t-size, 0.26s) var(--ease-out-apple),
+    opacity var(--t-fade, 0.2s) var(--ease-out-apple),
+    background var(--t-color, 0.25s) var(--ease-out-apple),
+    visibility 0s linear 0s
+}
+.settings-row.dep-row.dep-hidden {
+  height: 0;
+  min-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0;
+  pointer-events: none;
+  /* Hidden for good only once it has folded: keeps it out of the keyboard walk. */
+  visibility: hidden;
+  transition:  height var(--t-size, 0.26s) var(--ease-out-apple),
+    min-height var(--t-size, 0.26s) var(--ease-out-apple),
+    padding var(--t-size, 0.26s) var(--ease-out-apple),
+    opacity var(--t-fade, 0.2s) var(--ease-out-apple),
+    visibility 0s linear var(--t-size, 0.26s)
+}
+/* The pin is there when the row is under the pointer or selected, not on every row at once. */
+.result-item:hover .result-pin,
+.result-item.selected .result-pin,
+.result-pin.pinned,
+.result-pin:focus-visible,
+.result-pin.pin-pop {
+  width: 28px;
+  margin-left: -6px;
+  opacity: 0.75;
+}
+.result-pin:hover {
+  opacity: 1;
+  background: var(--card-hover);
+}
+.result-pin:active {
+  transform: scale(0.85);
+}
+/* A pinned item keeps its pin showing on every row, not only under the pointer. */
+.result-item:hover .result-pin.pinned,
+.result-item.selected .result-pin.pinned,
+.result-pin.pinned {
+  opacity: 0.85;
+}
+/* The bounce answers a click on the pin button (main.js adds this class), not
+   the pinned state: tied to the state it replayed on every pin, in every row,
+   each time a list was drawn again. */
+.result-pin.pin-pop {
+  animation: pin-pop var(--t-size, 0.3s) var(--ease-out-apple);
+}
+@keyframes pin-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.result-pin.pinned svg {
+  /* Pinned is marked, not shouted: the solid silhouette in the dim text colour. */
+  color: var(--text-dim);
+}
+/* The solid silhouette of the pin, laid under the outline; shown once pinned. */
+.result-pin svg path {
+  vector-effect: none;
+}
+.result-pin .pin-fill {
+  opacity: 0;
+  transition: opacity var(--t-color, 0.25s) var(--ease-out-apple)
+}
+.result-pin.pinned .pin-fill {
+  opacity: 1;
+}
+.result-pin svg {
+  /* The pin body spans most of its box, so it is drawn smaller than the other icons to match them;
+     it follows the row icon through the density modes (16px at 28px). */
+  width: calc(var(--result-icon) * 0.57);
+  height: calc(var(--result-icon) * 0.57);
+  /* 2px at 16px, in drawing units, so the line scales with the icon. */
+  stroke-width: 3px;
+  color: var(--icon);
+  transition:  color var(--t-color, 0.25s) var(--ease-out-apple)
+}
+#context-menu {
+  position: fixed;
+  width: max-content;
+  min-width: 280px;
+  max-width: calc(100vw - 16px);
+  padding: 4px;
+  /* Opaque: the blur sits under the whole window, so a see-through menu shows the rows of the
+     window itself through it. Same colour as the cards, without their transparency. */
+  background: rgb(from var(--card-bg) r g b / 1);
+  border: var(--card-border-w) solid var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 var(--glow-size) var(--glow-alpha);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 999;
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.97) translateY(-4px);
+  filter: blur(var(--enter-blur));
+  transition:  opacity var(--t-fade, 0.15s) var(--ease-out-apple), transform var(--t-move, 0.15s) var(--ease-out-apple), filter var(--t-blur, 0.15s) var(--ease-out-apple), visibility 0s linear var(--t-fade, 0.15s);
+  transform-origin: top left;
+}
+#context-menu.visible {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  filter: none;
+  transition:  opacity var(--t-fade, 0.15s) var(--ease-out-apple), transform var(--t-move, 0.15s) var(--ease-out-apple), filter var(--t-blur, 0.15s) var(--ease-out-apple), visibility 0s linear 0s
+}
+.ctx-item {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px;
+  background: transparent;
+  border-radius: max(4px, calc(var(--card-radius) - 4px));
+  box-shadow: none;
+  cursor: pointer;
+  transition:  background var(--t-color, 0.25s) var(--ease-out-apple)
+}
+.ctx-item:hover {
+  background: var(--card-hover);
+}
+.ctx-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ico-size);
+  height: var(--ico-size);
+  flex-shrink: 0;
+  color: var(--icon);
+}
+.ctx-item-label {
+  flex: 1;
+  font-size: 14px;
+  font-weight: var(--weight-medium);
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ctx-item-shortcut {
+  font-size: 12px;
+  font-weight: var(--weight-regular);
+  color: var(--text-dim);
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.ctx-item-shortcut:empty {
+  display: none;
+}
+.special-card {
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  border: var(--card-border-w) solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  flex-shrink: 0;
+  animation: result-enter var(--t-move, 0.55s) var(--ease-out-apple) both;
+}
+/* Same box as .result-item (the card supplies the border), so command cards line
+   up with the result rows in every density mode. */
+.special-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: calc(var(--card-h) - 2 * var(--card-border-w));
+  padding: 0 16px 0 8px;
+  cursor: pointer;
+  transition:  background var(--t-color, 0.25s) var(--ease-out-apple);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: var(--weight-medium);
+  line-height: 20px;
+}
+.special-action:hover {
+  background: var(--card-hover);
+}
+.welcome-row {
+  cursor: default;
+}
+.welcome-row:hover {
+  background: none;
+}
+.welcome-row.is-warning svg {
+  color: #e5a00d;
+}
+.special-action svg {
+  flex-shrink: 0;
+  color: var(--icon);
+  width: 20px;
+  height: 20px;
+  margin: 0 calc((var(--result-icon) - 20px) / 2);
+}
+.special-action span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.special-action .special-favicon {
+  /* Closed: 0 wide with a -12px margin that cancels the row's gap, so the label has not moved. */
+  width: 0;
+  height: 22px;
+  margin-right: -12px;
+  flex-shrink: 0;
+  border-radius: min(4px, var(--card-radius));
+  object-fit: contain;
+  opacity: 0;
+  transition: width var(--t-move, 0.24s) var(--ease-out-apple),
+    margin var(--t-move, 0.24s) var(--ease-out-apple),
+    opacity var(--t-fade, 0.2s) var(--ease-out-apple);
+}
+.special-action .special-favicon.show {
+  width: 22px;
+  margin-right: 0;
+  opacity: 1;
+}
+.special-hint {
+  flex-shrink: 0;
+  margin-left: auto;
+  color: var(--text-dim);
+  font-size: 13px;
+  font-weight: normal;
+}
+.special-action.is-disabled {
+  cursor: default;
+}
+.special-action.is-disabled:hover {
+  background: none;
+}
+/* Update flow. It sits directly under the version row that triggers it, so it
+   is deliberately not a card: no fill, no border, no radius — a card inside
+   .settings-card is the one thing the rest of this panel never does. Title,
+   size and the action button share a single line on the row's own metrics, the
+   bar only exists while bytes are moving, and the notes stay short enough that
+   they cannot shove the card around. */
+#update-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 16px 10px 20px;
+}
+#update-panel.hidden {
+  display: none;
+}
+#update-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 26px;
+}
+#update-title {
+  font-size: 13px;
+  font-weight: var(--weight-medium);
+  color: var(--text);
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#update-meta {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: var(--weight-regular);
+  color: var(--text-dim);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+#update-notes {
+  margin: 0;
+  max-height: 64px;
+  overflow-y: auto;
+  padding: 0;
+  background: none;
+  color: var(--text-dim);
+  font-family: var(--font-main);
+  font-size: 12px;
+  line-height: 16px;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  user-select: text;
+  -webkit-user-select: text;
+}
+#update-notes.hidden {
+  display: none;
+}
+#update-action {
+  flex-shrink: 0;
+}
+#update-action.hidden {
+  display: none;
+}
+#check-update-btn {
+  margin-left: auto;
+}
+.settings-link {
+  color: var(--accent);
+  text-decoration: none;
+  cursor: pointer;
+  transition:  opacity var(--t-fade, 0.2s) var(--ease-out-apple)
+}
+.settings-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+/* The "Type to search · Tab completes · …" line is retired; the animated
+   placeholder examples already show what to type. main.js still toggles
+   .hidden on it, which is harmless. */
+#hint {
+  display: none;
+  font-size: 13px;
+  color: var(--text-dim);
+  text-align: center;
+  padding: 12px var(--pad-x);
+  pointer-events: none;
+  font-family: var(--font-main);
+  background: transparent;
+  border: none;
+}
+.hidden {
+  display: none !important;
+}
+.swatch-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-left: auto;
+}
+.swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  /* The ring that marks the chosen colour was appearing in one step. */
+  transition:  box-shadow var(--t-color, 0.25s) var(--ease-out-apple),
+    transform var(--t-move, 0.16s) var(--ease-out-apple)
+}
+.swatch:hover {
+  transform: scale(1.08);
+}
+.swatch.active {
+  box-shadow: 0 0 0 2px var(--card-bg), 0 0 0 4px var(--text);
+}
+.swatch-custom {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px dashed var(--text-dim);
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Currency widget ("100 usd to rub") */
+.fx-card {
+  --fx-up: #4CC38A;
+  --fx-down: #FF4242;
+  --fx-font-num: var(--font-num);
+  font-family: var(--fx-font-num);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 20px;
+}
+.fx-main {
+  /* Room for three chips in a row: 3 x 80 + 2 x 10; wider when a long sum needs it (fxFitSum),
+     easing there while the graph beside it narrows. */
+  flex: 0 1 var(--fx-main-w, 264px);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: 12px;
+}
+.fx-sum {
+  transition: font-size var(--t-size, 0.45s) var(--ease-out-apple);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 35px;
+  margin-top: 4px;
+  font-size: 36px;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+}
+.fx-sum:not([title]) {
+  cursor: default;
+}
+.fx-part {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+.fx-val {
+  font-family: var(--fx-font-num);
+  font-size: 1em;
+  font-weight: var(--weight-medium);
+  line-height: 35px;
+  color: var(--text);
+}
+.fx-val.fx-pending {
+  color: var(--text-dim);
+}
+/* The whole widget is one family (Google Sans Flex, which ships Regular and Medium only). */
+.fx-code {
+  font-size: 16px;
+  font-weight: var(--weight-medium);
+  line-height: 15px;
+  color: var(--text);
+}
+.fx-arrow {
+  flex-shrink: 0;
+  position: relative;
+  top: -0.06em;
+  color: var(--text);
+}
+.fx-rate {
+  margin-top: 12px;
+  font-size: 17px;
+  font-weight: var(--weight-medium);
+  line-height: 20px;
+  color: var(--text);
+  opacity: 0.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fx-muted {
+  color: var(--text-dim);
+}
+.fx-chips {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  /* One row: the chips that do not fit are hidden (fxFitChips), never wrapped or squeezed. */
+  overflow: hidden;
+}
+.fx-chip {
+  /* Their names' widths plus an even share of the row; the ones that do not fit collapse
+     (fxFitChips). No min-width: one growing back in is held only by its easing max-width. */
+  flex: 1 1 auto;
+  white-space: nowrap;
+  max-width: 160px;
+  overflow: hidden;
+  height: 25px;
+  padding: 0 12px;
+  border: none;
+  border-radius: min(4px, var(--card-radius));
+  background: var(--card-hover);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: var(--weight-medium);
+  line-height: 14px;
+  cursor: pointer;
+  transition: background var(--t-color, 0.25s) var(--ease-out-apple),
+    max-width var(--t-size, 0.45s) var(--ease-out-apple), padding var(--t-size, 0.45s) var(--ease-out-apple),
+    margin var(--t-size, 0.45s) var(--ease-out-apple), opacity var(--t-fade, 0.3s) var(--ease-out-apple),
+    visibility 0s;
+}
+/* A chip that does not fit: narrowed to nothing, its gap taken back, so the others widen into its
+   room as it goes and give it room back as it grows in. */
+.fx-chip.fx-chip-off {
+  max-width: 0;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: -10px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: background var(--t-color, 0.25s) var(--ease-out-apple),
+    max-width var(--t-size, 0.45s) var(--ease-out-apple), padding var(--t-size, 0.45s) var(--ease-out-apple),
+    margin var(--t-size, 0.45s) var(--ease-out-apple), opacity var(--t-fade, 0.3s) var(--ease-out-apple),
+    visibility 0s linear var(--t-size, 0.45s);
+}
+.fx-chip:hover {
+  background: var(--card-line);
+}
+/* Rolling digits (fxRoll in currency.js): each digit is a drum of 0-9 that turns to its value,
+   blurred while it moves. The hidden copy of the digit gives the cell its width and baseline; the
+   drum stands over it, clipped to one line. Tabular figures, so a cell keeps its width as it turns. */
+.fx-val,
+.fx-rate {
+  font-variant-numeric: tabular-nums;
+}
+.fx-dg {
+  position: relative;
+  display: inline-block;
+  clip-path: inset(0 -0.15em);
+  /* clip-path only hides the rest of the 0-9 column; it still counted in the scroll height of the
+     card around it (an empty strip under the last row of Appearance). This keeps it out. */
+  overflow-y: clip;
+}
+.fx-dg-ghost {
+  visibility: hidden;
+}
+.fx-reel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(calc(var(--d) * -1lh));
+  transition: transform var(--t-move, 0.6s) var(--ease-out-apple);
+}
+.fx-reel > i {
+  font-style: normal;
+}
+.fx-dg.rolling > .fx-reel {
+  animation: fx-reel-blur var(--t-blur, 0.6s) var(--ease-out-apple);
+}
+@keyframes fx-reel-blur {
+  30% {
+    filter: blur(1.6px);
+  }
+}
+/* A new card is fitted at once; drums set without a turn. */
+.fx-still .fx-main,
+.fx-still .fx-sum,
+.fx-still .fx-chip,
+.fx-still .fx-reel,
+.fx-still.fx-val .fx-reel,
+.fx-still.fx-rate .fx-reel,
+.fx-still.roll-val .fx-reel {
+  transition: none;
+}
+/* The numbers in Settings (rollSet in roll.js) roll the same way, but quickly: a drag or a held +
+   changes them every few frames, and a long turn would trail behind, a blur that never settles.
+   min() keeps Movement off at 0. */
+.roll-val .fx-reel {
+  transition-duration: min(var(--t-move, 0.18s), 0.18s);
+}
+.roll-val .fx-dg.rolling > .fx-reel {
+  animation-duration: min(var(--t-blur, 0.18s), 0.18s);
+}
+/* Where fxFitSum and fxFitChips measure: out of sight and out of the layout. */
+.fx-probe {
+  position: absolute;
+  left: -10000px;
+  top: 0;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+}
+.fx-chip:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 1px;
+}
+.fx-graph {
+  /* Takes the rest of the card; a long sum may narrow it down to this (FX_GRAPH_MIN in currency.js). */
+  flex: 1 1 160px;
+  min-width: 160px;
+  height: 122px;
+  border-radius: min(4px, var(--card-radius));
+  background: var(--card-hover);
+}
+.fx-graph--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+.fx-chart {
+  display: block;
+  overflow: visible;
+}
+.fx-grid {
+  fill: none;
+  stroke: var(--text);
+  stroke-opacity: 0.15;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.fx-line {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.fx-dot {
+  fill: var(--text);
+}
+.fx-cursor-line {
+  stroke: var(--text);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+/* The cursor glides from point to point: the elements sit at 0 and are moved with
+   a transform, which can be transitioned (x1/cx cannot). .fx-snap switches that
+   off for the frame in which the cursor first appears, so it does not slide in
+   from wherever it was last left. */
+.fx-cursor-line,
+.fx-cursor .fx-dot,
+.fx-tip-g {
+  transition: transform var(--t-move, 0.16s) var(--ease-out-apple);
+}
+.fx-snap .fx-cursor-line,
+.fx-snap .fx-dot,
+.fx-snap .fx-tip-g {
+  transition: none;
+}
+.fx-tip-bg {
+  fill: var(--card-bg);
+  stroke: color-mix(in srgb, var(--text) 14%, transparent);
+  stroke-width: 1;
+}
+.fx-tip {
+  fill: var(--text);
+  font-family: var(--fx-font-num);
+  font-size: 11px;
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+.fx-tip-date {
+  fill: var(--text);
+  fill-opacity: 0.5;
+}
+.fx-change-bg {
+  fill: currentColor;
+  fill-opacity: 0.14;
+}
+.fx-change-text {
+  fill: currentColor;
+  font-family: var(--fx-font-num);
+  font-size: 11px;
+  font-weight: var(--weight-medium);
+}
+.fx-change--down {
+  color: var(--fx-down);
+}
+.fx-change--up {
+  color: var(--fx-up);
+}
+.fx-change--flat {
+  color: var(--text-dim);
+}
+/* Updates in place (currency.js): a changed code or chip eases in, the change pill
+   settles while the curve morphs, and a card waiting on new rates dims. */
+.fx-swap {
+  animation: fx-swap var(--t-fade, 0.28s) var(--ease-out-apple) both;
+}
+@keyframes fx-swap {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+.fx-morph .fx-change {
+  animation: fx-settle var(--t-fade, 0.4s) var(--ease-out-apple) both;
+}
+@keyframes fx-settle {
+  from {
+    opacity: 0.3;
+  }
+}
+/* One list for the column: its width eases with a long sum (fxFitSum) -- a second rule setting
+   only the opacity used to override that, and the column jumped while the chips and graph eased. */
+.fx-main {
+  transition: flex-basis var(--t-size, 0.45s) var(--ease-out-apple), opacity var(--t-fade, 0.2s) var(--ease-out-apple);
+}
+.fx-graph {
+  transition: opacity var(--t-fade, 0.2s) var(--ease-out-apple);
+}
+.fx-loading .fx-main,
+.fx-loading .fx-graph {
+  opacity: 0.6;
+}
+/* HSV color picker (accent / background), built in main.js. */
+#color-picker {
+  position: fixed;
+  width: 208px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* Opaque: the blur sits under the whole window, so a see-through menu shows the rows of the
+     window itself through it. Same colour as the cards, without their transparency. */
+  background: rgb(from var(--card-bg) r g b / 1);
+  border: var(--card-border-w) solid var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 var(--glow-size) var(--glow-alpha);
+  z-index: 1000;
+  /* Grows out of the swatch it was opened from (transform-origin is set in openPicker). */
+  transform-origin: top right;
+  transition:  opacity var(--t-fade, 0.18s) var(--ease-out-apple), transform var(--t-move, 0.22s) var(--ease-out-apple), filter var(--t-blur, 0.18s) var(--ease-out-apple), visibility 0s linear 0s
+}
+#color-picker.cp-hidden {
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.92);
+  filter: blur(var(--enter-blur));
+  transition:  opacity var(--t-fade, 0.15s) var(--ease-out-apple), transform var(--t-move, 0.15s) var(--ease-out-apple), filter var(--t-blur, 0.15s) var(--ease-out-apple), visibility 0s linear var(--t-fade, 0.15s)
+}
+.cp-sv {
+  position: relative;
+  height: 132px;
+  border-radius: min(8px, var(--card-radius));
+  cursor: crosshair;
+  touch-action: none;
+}
+.cp-hue {
+  position: relative;
+  height: 12px;
+  border-radius: 100px;
+  cursor: ew-resize;
+  touch-action: none;
+  background: linear-gradient(to right,
+      #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+}
+.cp-alpha {
+  position: relative;
+  display: none;
+  height: 12px;
+  border-radius: 100px;
+  cursor: ew-resize;
+  touch-action: none;
+  background: repeating-conic-gradient(#8885 0% 25%, #fff5 0% 50%) 0 0 / 8px 8px;
+}
+#color-picker.cp-alpha-on .cp-alpha {
+  display: block;
+}
+.cp-alpha-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.cp-knob {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.5);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.cp-sv .cp-knob {
+  width: 14px;
+  height: 14px;
+}
+/* Only left is set from script on the bars; without a top the knob centred on the bar's top edge. */
+:is(.cp-hue, .cp-alpha) > .cp-knob {
+  top: 50%;
+}
+.cp-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cp-preview {
+  background-clip: padding-box;
+  width: 28px;
+  height: 28px;
+  border-radius: min(8px, var(--card-radius));
+  border: var(--card-border-w) solid var(--card-border);
+  flex-shrink: 0;
+}
+.cp-hex {
+  flex: 1;
+  min-width: 0;
+  height: 28px;
+  padding: 0 8px;
+  border: var(--card-border-w) solid var(--card-border);
+  border-radius: min(8px, var(--card-radius));
+  background: var(--card-deep);
+  color: var(--text);
+  font-family: var(--font-main);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+}
+.cp-hex:focus {
+  border-color: var(--accent);
+}
+.align-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 24px);
+  gap: 4px;
+  margin-left: auto;
+}
+.align-cell {
+  width: 24px;
+  height: 24px;
+  background: var(--card-deep);
+  border: none;
+  border-radius: min(6px, var(--card-radius));
+  cursor: pointer;
+  transition:  background var(--t-color, 0.25s) var(--ease-out-apple), color var(--t-color, 0.25s) var(--ease-out-apple)
+}
+.align-cell:hover {
+  background: var(--card-hover);
+}
+.align-cell.active {
+  background: var(--accent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .db-rect,
+  .drag-bar .ntf-short,
+  .drag-bar .ntf-detail {
+    transition-duration: 0.01s;
+  }
+}
+/* Smooth text swap when the interface language changes. Only elements whose
+   string actually changed are given the animation, so labels that read the
+   same in both languages do not flicker. */
+@keyframes i18n-fade {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.i18n-fade {
+  animation: i18n-fade var(--t-fade, 0.18s) var(--ease-out-apple) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .i18n-fade {
+    animation: none;
+  }
+  :root {
+    transition: none;
+  }
+}
+/* Keyboard focus from keynav.js: looks like the mouse hover it stands in for. */
+.settings-row.kbd-focus,
+.ctx-item.kbd-focus {
+  background: var(--card-hover);
+}
+:is(#settings-section, #theme-card) .kbd-focus:not(.settings-row) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.dock-tile.kbd-focus {
+  background: var(--card-selected);
+}
+html[data-pins="left"] .dock-tile.kbd-focus {
+  padding-left: 18px;
+}
+html[data-pins="right"] .dock-tile.kbd-focus {
+  padding-right: 18px;
+}
+.dock-tile.kbd-focus .dock-label {
+  max-width: 92px;
+  opacity: 1;
+}
+html[data-pins="left"] .dock-tile.kbd-focus .dock-label {
+  margin-right: 18px;
+}
+html[data-pins="right"] .dock-tile.kbd-focus .dock-label {
+  margin-left: 18px;
+}
+
+
+/* While the window is closed, and until the first search of the next open has
+   rendered, the previous list must not be painted: the window fades in and the
+   rows then run their staggered enter animation. Without this the finished
+   list from before the hide is on screen for a beat, then jumps back to the
+   animation. */
+#app-container.content-stale :is(#results-section, #pins-section, #pin-dock) {
+  visibility: hidden;
+}
+
+/* ===== Settings > Animations: the keyframe animations =====
+
+   The --t-* variables above cover transitions, which is most of the motion.
+   Keyframe animations have a fixed duration written in the `animation`
+   shorthand, so they are switched off by name instead. Each one is mapped to
+   the kind it really belongs to, and is dropped as soon as either of its kinds
+   is off: result-enter moves *and* fades, so turning off either one kills it. */
+
+html[data-anim-fade="off"] :is(
+    #settings-section:not(.hidden) .settings-row,
+    #empty-state,
+    .result-item,
+    .special-card,
+    .i18n-fade),
+html[data-anim-move="off"] :is(
+    #settings-section:not(.hidden) .settings-row,
+    #empty-state,
+    .result-item,
+    .special-card,
+    .i18n-fade) {
+  animation: none;
+}
+
+/* The pin button's bounce is a scale, so it belongs to Size. */
+html[data-anim-size="off"] .result-pin.pin-pop {
+  animation: none;
+}
+
+
+/* Blur and Movement off mean the effect is not drawn at all, not that it
+   arrives instantly. --t-blur: 0s only removes the duration: the window would
+   snap to blur(16px) and stay blurred for the whole fade, which is the opposite
+   of what "no blur" should look like. Dropping the property instead leaves the
+   hide/show as a plain opacity fade. */
+html[data-anim-blur="off"] {
+  --enter-blur: 0px;
+}
+html[data-anim-blur="off"] #app-container.window-hidden {
+  filter: none;
+}
+html[data-anim-blur="off"] .drag-bar .ntf-short,
+html[data-anim-blur="off"] .drag-bar .ntf-detail {
+  filter: none;
+}
+
+/* Side preview (sidepreview.js): a card beside the first rows of the list. The rows give up their
+   path, which the card shows under the picture. Its width is 47% of the list's, the same number the
+   rows' right margin makes room for. */
+/* The selected row opened into a card (sidepreview.js). */
+:is(#pins-list, #results-list, .su-mock-rows) > .result-item.sp-open {
+  position: relative;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  height: min(176px, calc(100vh - 170px));
+  padding: 12px;
+  cursor: pointer;
+}
+.result-item {
+  transition: background-color var(--t-color, 0.25s) var(--ease-out-apple), box-shadow var(--t-glow, 0.25s) var(--ease-out-apple), transform var(--t-move, 0.15s) var(--ease-out-apple), height var(--t-size, 0.26s) var(--ease-out-apple);
+}
+:is(#pins-list, #results-list, .su-mock-rows) > .result-item.sp-open > :not(.sp-body):not(.result-pin) {
+  display: none;
+}
+/* The opened card is the selected row and says so by its size; a darker card on top of that only
+   muddies the preview. */
+:is(#pins-list, #results-list, .su-mock-rows) > .result-item.sp-open:is(.selected, :hover) {
+  background: var(--card-bg);
+}
+:is(#pins-list, #results-list, .su-mock-rows) > .result-item.sp-open > .result-pin {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+}
+body > .result-item .sp-body {
+  display: none;
+}
+.sp-body {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 18px;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+}
+.sp-body:not(.sp-wide) .sp-stage {
+  flex: 0 0 auto;
+  height: 100%;
+  aspect-ratio: 1;
+}
+.sp-stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.sp-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  animation: sp-in var(--t-fade, 0.22s) var(--ease-out-apple) both;
+}
+.sp-content.sp-seed {
+  animation: none;
+}
+.sp-content.sp-leaving {
+  animation: sp-out var(--t-fade, 0.2s) var(--ease-out-apple) both;
+  pointer-events: none;
+}
+@keyframes sp-in {
+  from { opacity: 0; filter: blur(var(--enter-blur)); }
+  to { opacity: 1; filter: none; }
+}
+@keyframes sp-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+.sp-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.28));
+}
+.sp-photo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: calc(var(--card-radius) * 0.6);
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.3));
+}
+video.sp-photo {
+  width: 100%;
+  height: 100%;
+  object-position: left center;
+  cursor: pointer;
+}
+.sp-pdf {
+  width: calc(100% + 24px);
+  height: 100%;
+  max-width: none;
+  border: 0;
+  border-radius: calc(var(--card-radius) * 0.6);
+  background: #fff;
+}
+.sp-glyph {
+  width: 96px;
+  height: 96px;
+  color: var(--text-dim);
+}
+.sp-text {
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Cascadia Mono', Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--text);
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 28px), transparent);
+  mask-image: linear-gradient(to bottom, black calc(100% - 28px), transparent);
+}
+.sp-body.sp-wide .sp-stage {
+  flex: 0 0 46%;
+}
+.sp-info {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  min-width: 0;
+  padding-right: 28px;
+}
+.sp-name {
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: var(--weight-medium);
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sp-meta {
+  font-size: 13px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sp-path.result-path {
+  max-width: none;
+  justify-content: flex-start;
+  text-align: left;
+  font-size: 12px;
+  line-height: 16px;
+  margin: 2px 0 0;
+}
+/* The PDF viewer's own scrollbar sits in its last 24px, which the card's edge cuts off; the wheel
+   still scrolls the page. */
+.sp-content:has(> .sp-pdf) {
+  overflow: hidden;
+  border-radius: calc(var(--card-radius) * 0.6);
+}
+.sp-pdf {
+  flex: 0 0 auto;
+}
+
+/* ---- First-run setup (setup.js) ---- */
+#setup {
+  position: absolute;
+  z-index: 70;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  top: calc(3 * var(--pad-y) + 16px);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+  outline: none;
+  color: var(--text);
+  --su-dim: color-mix(in srgb, var(--text) 68%, transparent);
+  --su-panel: color-mix(in srgb, var(--text) 9%, var(--card-bg));
+  --key-bg: var(--card-bg);
+  background: var(--card-bg);
+  border: var(--card-border-w) solid var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px) scale(0.985);
+  pointer-events: none;
+  transition: opacity var(--t-fade, 0.22s) var(--ease-out-apple), transform var(--t-move, 0.34s) var(--ease-out-apple), visibility 0s linear var(--t-fade, 0.22s);
+}
+#setup.show {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+  transition: opacity var(--t-fade, 0.22s) var(--ease-out-apple), transform var(--t-move, 0.34s) var(--ease-out-apple), visibility 0s;
+}
+#app-container > :not(#setup):not(.drag-bar) {
+  transition: opacity var(--t-fade, 0.2s) var(--ease-out-apple);
+}
+#app-container.setup-active > :not(#setup):not(.drag-bar) {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.su-stage {
+  position: relative;
+  flex: 0 0 auto;
+  height: 490px;
+  overflow: hidden;
+}
+.su-step {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  padding: 22px 26px 8px;
+  box-sizing: border-box;
+  overflow: hidden;
+  animation: su-step-in var(--t-move, 0.36s) var(--ease-out-apple) both;
+}
+.su-step.from-left { --su-dx: -26px; }
+.su-step.from-right { --su-dx: 26px; }
+.su-step.still { animation: none; }
+.su-step.leaving {
+  pointer-events: none;
+  animation: su-step-out var(--t-move, 0.22s) var(--ease-out-apple) both;
+}
+.su-step.leaving.to-left { --su-dx: -26px; }
+.su-step.leaving.to-right { --su-dx: 26px; }
+@keyframes su-step-in {
+  from { opacity: 0; transform: translateX(var(--su-dx, 0)); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes su-step-out {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateX(calc(var(--su-dx, 26px) * -0.6)); }
+}
+.su-step:not(.still):not(.leaving) > * {
+  animation: su-rise var(--t-move, 0.5s) var(--ease-out-apple) both;
+}
+.su-step > :nth-child(2) { animation-delay: 60ms; }
+.su-step > :nth-child(3) { animation-delay: 120ms; }
+.su-step > :nth-child(4) { animation-delay: 180ms; }
+.su-step > :nth-child(5) { animation-delay: 240ms; }
+@keyframes su-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.su-hero {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 6px;
+}
+.su-logo {
+  display: block;
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.32));
+  animation: su-logo-in var(--t-move, 0.7s) var(--ease-out-apple) both;
+}
+@keyframes su-draw { to { stroke-dashoffset: 0; } }
+@keyframes su-logo-in {
+  from { opacity: 0; transform: scale(0.8) rotate(-40deg); }
+}
+.su-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.su-head .su-ico {
+  flex: 0 0 auto;
+  color: var(--accent);
+}
+.su-title {
+  margin: 0;
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 500;
+  color: var(--text);
+}
+.su-head .su-title {
+  font-size: 20px;
+  line-height: 26px;
+}
+.su-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--su-dim);
+  max-width: 54ch;
+}
+.su-text-dim {
+  font-size: 13px;
+  opacity: 0.85;
+}
+.su-label {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--su-dim);
+}
+.su-langs {
+  align-self: flex-start;
+}
+.su-themes {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+.su-theme {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  animation: su-rise var(--t-move, 0.5s) var(--ease-out-apple) both;
+  animation-delay: calc(120ms + var(--i, 0) * 45ms);
+}
+.su-theme-card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  height: 66px;
+  padding: 9px 8px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: transform var(--t-move, 0.22s) var(--ease-out-apple), outline-color var(--t-color, 0.25s) var(--ease-out-apple);
+}
+.su-theme-card i {
+  display: block;
+  height: 9px;
+  border-radius: 5px;
+}
+.su-theme-split {
+  background: linear-gradient(135deg, #3a3a3a 50%, #aeab9e 50%);
+}
+.su-theme:hover .su-theme-card {
+  transform: translateY(-3px);
+}
+.su-theme.on .su-theme-card {
+  outline-color: var(--accent);
+}
+.su-theme-name {
+  font-size: 12px;
+  color: var(--su-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--t-color, 0.25s) var(--ease-out-apple);
+}
+.su-theme.on .su-theme-name {
+  color: var(--text);
+}
+.su-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: calc(var(--card-radius) * 0.7);
+  background: var(--su-panel);
+  cursor: default;
+}
+.su-row-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.su-row-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+.su-row-sub {
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--su-dim);
+}
+.su-warn .su-row-title {
+  color: var(--accent);
+}
+.su-hotkey {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 26px;
+  min-width: 0;
+  flex: 0 1 auto;
+}
+.su-hotkey-big {
+  gap: 6px;
+  margin-top: 4px;
+}
+.su-hotkey-big .su-key {
+  padding: 8px 14px;
+  font-size: 15px;
+}
+.su-key {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 7px;
+  background: var(--card-bg);
+  border: var(--card-border-w, 1px) solid var(--card-border);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.18);
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--text);
+}
+.su-plus {
+  color: var(--su-dim);
+  font-size: 12px;
+}
+.su-press {
+  font-size: 12px;
+  color: var(--accent);
+  animation: su-blink 1.1s ease-in-out infinite;
+}
+@keyframes su-blink { 50% { opacity: 0.35; } }
+.su-ghost,
+.su-primary {
+  flex: 0 0 auto;
+  height: 32px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--t-color, 0.25s) var(--ease-out-apple), filter var(--t-color, 0.25s) var(--ease-out-apple), transform var(--t-move, 0.14s) var(--ease-out-apple), opacity var(--t-fade, 0.2s) var(--ease-out-apple);
+}
+.su-ghost {
+  background: transparent;
+  color: var(--su-dim);
+}
+.su-ghost:hover {
+  background: var(--su-panel);
+  color: var(--text);
+}
+.su-row .su-ghost {
+  background: var(--card-bg);
+  color: var(--text);
+}
+.su-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.su-primary:hover {
+  filter: brightness(1.08);
+}
+.su-ghost:active,
+.su-primary:active {
+  transform: scale(0.95);
+}
+.su-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.su-opts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.su-opt {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 14px;
+  border: none;
+  border-radius: calc(var(--card-radius) * 0.7);
+  background: var(--su-panel);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+  transition: transform var(--t-move, 0.22s) var(--ease-out-apple), outline-color var(--t-color, 0.25s) var(--ease-out-apple), background var(--t-color, 0.25s) var(--ease-out-apple);
+}
+.su-opt .su-ico {
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.su-opt:hover {
+  transform: translateY(-2px);
+}
+.su-opt.on {
+  outline-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 16%, var(--su-panel));
+}
+.su-opt-title {
+  font-size: 15px;
+  font-weight: 500;
+}
+.su-opt-text {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--su-dim);
+}
+.su-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+.su-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--su-panel);
+  overflow: hidden;
+}
+.su-bar > i {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: var(--accent);
+  transition: width var(--t-size, 0.3s) var(--ease-out-apple);
+}
+.su-bar.run > i {
+  background: linear-gradient(90deg, var(--accent) 0 40%, color-mix(in srgb, var(--accent) 55%, #fff) 50%, var(--accent) 60% 100%) 0 0 / 220% 100%;
+  animation: su-shimmer 1.4s linear infinite;
+}
+@keyframes su-shimmer { to { background-position: -220% 0; } }
+.su-progress-text {
+  font-size: 12px;
+  color: var(--su-dim);
+  min-height: 16px;
+}
+.su-mock {
+  position: relative;
+  flex: 0 0 auto;
+  height: 244px;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: calc(var(--card-radius) * 0.8);
+  background: var(--su-panel);
+}
+/* The real window at 0.8, drawn with the real search box and result classes. */
+.su-mock-inner {
+  zoom: 0.8;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+.su-mock-bar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: var(--search-h);
+  padding: 0 12px 0 8px;
+  box-sizing: border-box;
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  border: var(--card-border-w) solid var(--card-border);
+  box-shadow: var(--bar-shadow);
+}
+.su-mock-icon {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: var(--search-icon);
+  height: var(--search-icon);
+  padding: calc(var(--search-icon) * 0.28);
+  color: var(--icon);
+}
+.su-mock-q {
+  white-space: pre;
+  font-size: 17px;
+  font-weight: var(--weight-medium);
+  color: var(--text);
+}
+.su-mock-caret {
+  width: 2px;
+  height: 20px;
+  margin-left: -12px;
+  border-radius: 1px;
+  background: var(--accent);
+  animation: su-blink 1s steps(1) infinite;
+}
+.su-mock-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+.su-mock-rows > .result-item.sp-open {
+  overflow: hidden;
+}
+.su-scene-text {
+  min-height: 40px;
+}
+.su-scene-text.swap {
+  animation: su-rise var(--t-move, 0.4s) var(--ease-out-apple) both;
+}
+.su-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.su-chip {
+  height: 26px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 13px;
+  background: var(--su-panel);
+  color: var(--su-dim);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background var(--t-color, 0.25s) var(--ease-out-apple), color var(--t-color, 0.25s) var(--ease-out-apple), transform var(--t-move, 0.14s) var(--ease-out-apple);
+}
+.su-chip:hover {
+  color: var(--text);
+}
+.su-chip:active {
+  transform: scale(0.95);
+}
+.su-chip.on {
+  background: var(--accent);
+  color: #fff;
+}
+.su-cap {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity var(--t-fade, 0.25s) var(--ease-out-apple), transform var(--t-move, 0.25s) var(--ease-out-apple);
+}
+.su-cap .su-key {
+  font-size: 11px;
+  padding: 3px 8px;
+  /* Opaque: the keys sit over the row's path in the "Open up" scene. */
+  background: rgb(from color-mix(in srgb, var(--text) 10%, var(--card-bg)) r g b / 1);
+  transition: transform var(--t-move, 0.12s) var(--ease-out-apple), box-shadow var(--t-glow, 0.2s) var(--ease-out-apple);
+}
+.su-mock.pressed .su-cap {
+  opacity: 1;
+  transform: none;
+}
+.su-mock.pressed .su-cap .su-key {
+  transform: translateY(2px);
+  box-shadow: 0 0 10px var(--accent);
+}
+
+.su-check-ring {
+  stroke-dasharray: 176;
+  stroke-dashoffset: 176;
+  animation: su-draw var(--t-move, 0.7s) 0.1s var(--ease-out-apple) forwards;
+}
+.su-check-tick {
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: su-draw var(--t-move, 0.45s) 0.55s var(--ease-out-apple) forwards;
+}
+.su-foot {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px 14px;
+}
+.su-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.su-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--su-dim);
+  opacity: 0.35;
+  transition: width var(--t-size, 0.3s) var(--ease-out-apple), opacity var(--t-fade, 0.2s) var(--ease-out-apple), background var(--t-color, 0.25s) var(--ease-out-apple);
+}
+.su-dot.past {
+  opacity: 0.7;
+}
+.su-dot.on {
+  width: 20px;
+  background: var(--accent);
+  opacity: 1;
+}
+.su-nav {
+  display: flex;
+  gap: 8px;
+  justify-self: end;
+}
+.su-langs {
+  margin-left: 0;
+}
+.su-denses {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.su-dens {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  animation: su-rise var(--t-move, 0.5s) var(--ease-out-apple) both;
+  animation-delay: calc(120ms + var(--i, 0) * 45ms);
+}
+/* The three modes as small diagrams: the search bar and three rows at the mode's own sizes. */
+.su-dens-pic {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  height: 66px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background: var(--su-panel);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: transform var(--t-move, 0.22s) var(--ease-out-apple), outline-color var(--t-color, 0.25s) var(--ease-out-apple);
+}
+.su-dens-pic i {
+  display: block;
+  border-radius: 4px;
+  background: var(--card-bg);
+}
+.su-dens-pic .b {
+  height: 11px;
+  margin-bottom: 3px;
+  background: color-mix(in srgb, var(--text) 24%, var(--card-bg));
+}
+.su-dens-pic .r {
+  height: 9px;
+}
+.su-dens[data-density="compact-results"] .su-dens-pic,
+.su-dens[data-density="compact-full"] .su-dens-pic {
+  gap: 2px;
+}
+.su-dens[data-density="compact-results"] .r,
+.su-dens[data-density="compact-full"] .r {
+  height: 6px;
+}
+.su-dens[data-density="compact-full"] .b {
+  height: 7px;
+  margin-bottom: 2px;
+}
+.su-dens:hover .su-dens-pic {
+  transform: translateY(-3px);
+}
+.su-dens.on .su-dens-pic {
+  outline-color: var(--accent);
+}
+.su-dens.on .su-theme-name {
+  color: var(--text);
+}
+.su-density-tip {
+  min-height: 18px;
+  margin-top: -6px;
+}
+#setting-setup-btn {
+  margin-left: auto;
+}
+#su-defaults {
+  justify-self: start;
+}
+
+/* The hotkey as keycaps, in Settings and in the setup (main.js paintHotkey). */
+.su-key {
+  background: var(--key-bg, color-mix(in srgb, var(--text) 10%, var(--card-bg)));
+}
+#setting-hotkey-value {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow: visible;
+}
+.su-hotkey .su-key,
+#setting-hotkey-value .su-key {
+  transition: background var(--t-color, 0.25s) var(--ease-out-apple), border-color var(--t-color, 0.25s) var(--ease-out-apple), box-shadow var(--t-glow, 0.2s) var(--ease-out-apple), color var(--t-color, 0.25s) var(--ease-out-apple);
+}
+.hk-hint {
+  color: var(--accent);
+  font-size: 13px;
+  animation: capture-pulse 1.2s ease infinite;
+}
+.hk-hint.bad {
+  color: #e5a00d;
+  animation: none;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.su-key.live {
+  border-color: var(--accent);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.18), 0 0 10px color-mix(in srgb, var(--accent) 55%, transparent);
+  animation: hk-pop var(--t-size, 0.16s) var(--ease-out-apple);
+}
+.su-key-wait {
+  opacity: 0.55;
+  border-style: dashed;
+  animation: capture-pulse 1.2s ease infinite;
+}
+@keyframes hk-pop {
+  from { transform: scale(0.86); }
+}
+.applied > .su-key {
+  animation: hk-flash var(--t-color, 0.7s) var(--ease-out-apple) backwards;
+}
+.applied > .su-key:nth-of-type(2) { animation-delay: 70ms; }
+.applied > .su-key:nth-of-type(3) { animation-delay: 140ms; }
+@keyframes hk-flash {
+  from { background: var(--accent); border-color: var(--accent); color: #fff; transform: scale(1.14); }
+}
+#setting-hotkey-row.capturing,
+.su-row.capturing {
+  animation: hk-ring 1.5s ease-out infinite;
+}
+@keyframes hk-ring {
+  from { box-shadow: 0 0 0 1.5px var(--accent), 0 0 0 1.5px color-mix(in srgb, var(--accent) 50%, transparent); }
+  to { box-shadow: 0 0 0 1.5px var(--accent), 0 0 0 8px transparent; }
+}
+
+/* ===== Fold favorites (pinsfold.js) ===== */
+/* The arrow is in the list's flow, right after the favourites: under the box while they are folded,
+   under the last of them once they are open. */
+#pins-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 22px;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  transition: translate var(--t-move, 0.55s) var(--ease-out-apple), color var(--t-color, 0.25s) var(--ease-out-apple);
+}
+#pins-toggle.available {
+  display: flex;
+  animation: pins-toggle-in var(--t-fade, 0.45s) var(--ease-out-apple) both;
+}
+#pins-section:not(.hidden) + #pins-toggle {
+  margin-top: 6px;
+}
+@keyframes pins-toggle-in {
+  from {
+    opacity: 0;
+    scale: 0.8;
+  }
+}
+#pins-toggle:hover {
+  color: #fff;
+}
+#pins-toggle svg {
+  width: 16px;
+  height: 16px;
+  transition: rotate var(--t-move, 0.55s) var(--ease-out-apple);
+}
+#pins-toggle.open svg {
+  rotate: 180deg;
+}
+/* Folding: the rows fade up and out before the list is taken away (setPinsOpen in main.js waits
+   the same 0.22s). */
+#pins-section {
+  transition: opacity var(--t-fade, 0.22s) var(--ease-out-apple), translate var(--t-move, 0.22s) var(--ease-out-apple);
+}
+#pins-section.pins-closing {
+  opacity: 0;
+  translate: 0 -8px;
+}
+
+/* ===== Squircle corners (Appearance → Corner Radius) ===== */
+/* Continuous corners: the curve eases into the straight edge instead of meeting it as an arc, so a
+   card reads calmer at the same radius. Only the cards and what is drawn like them; capsules,
+   toggles and dots stay round. Chromium paints it natively; elsewhere the arcs stay. */
+@supports (corner-shape: squircle) {
+  html[data-corners="squircle"] :is(#search-box, .result-item, .special-card, .settings-card, #hint,
+      #context-menu, #content-menu, #anim-menu, #color-picker, #setup, .dock-tile, #pin-dock,
+      .sp-photo, .sp-pdf, .sp-content, .su-row, .su-opt, .su-mock, .su-mock-bar, .ctx-item, .ms-item,
+      #cc-pill, .cc-tool) {
+    corner-shape: squircle;
+  }
+}
+
+/* Rows leaving the list fade out where they were (renderResults in main.js). */
+#results-ghosts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+}
+#results-ghosts .sp-body {
+  display: none;
+}
+
+/* Over a light wallpaper the drag bar and the favourites arrow turn dark (contrast.js reads the
+   brightness behind each of them). The pinned bar keeps its own colour. */
+.drag-bar.on-light:not(.pinned) .db-rect {
+  background-color: rgba(0, 0, 0, 0.55);
+}
+.drag-bar.on-light:not(.pinned):hover:not(.notify):not(.active) .db-rect {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+#pins-toggle.on-light {
+  color: rgba(0, 0, 0, 0.6);
+}
+#pins-toggle.on-light:hover {
+  color: rgba(0, 0, 0, 0.85);
+}
+
+/* With Blur on (Appearance), the menus are frosted cards: the cards' colour and opacity over the
+   desktop's blur (blur.js). The desktop's blur is under the whole page, so the window's own rows
+   under a menu are blurred here; a wide radius turns their text into an even haze instead of soft
+   bright patches. Opaque with Blur off (their own rules). */
+html[data-blur="on"] :is(#context-menu, #content-menu, #anim-menu, #color-picker) {
+  background: var(--card-bg);
+  backdrop-filter: blur(28px);
+}

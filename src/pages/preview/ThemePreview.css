@@ -1,0 +1,44 @@
+/* The tabs over the preview and the frame Umbra's window is drawn in (public/preview). */
+.tp {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tp__tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.tp__tab {
+  flex: 1;
+  height: 30px;
+  border: 0;
+  border-radius: 7px;
+  background: none;
+  color: #4a4a4a;
+  font-family: 'Wix Madefor Display', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition:
+    background 0.25s,
+    color 0.25s;
+}
+
+.tp__tab:hover {
+  color: #737373;
+}
+
+.tp__tab.is-on {
+  background: #1e1e1e;
+  color: #e3e3e3;
+}
+
+.tp__frame {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  background: #23302f;
+  transition: height 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}

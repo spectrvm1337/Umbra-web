@@ -131,97 +131,121 @@ export const TEMPLATE_CSS = `:root {
    --font-main, --glow-alpha and --card-border are written the same way, but
    only while a font from !font or a custom glow or border colour is chosen. */`
 
-export const NEO_BRUTAL_CSS = `/* Neo-Brutalist theme for Umbra */
+export const NEO_BRUTAL_CSS = `/* Neo-Brutalist theme for Umbra: flat, high contrast, hard offset shadows */
 
 :root {
-  --bg: #e8e8e8;
-  --card-bg: #ffffff;
+  /* Umbra writes these onto <html> itself, so they need !important */
+  --card-bg: #ffffff !important;
+  --text: #000000 !important;
+  --accent: #888888 !important;
+  --card-radius: 12px !important;
+  --gap: 12px !important;
+
   --card-hover: #f0f0f0;
+  --card-selected: #f0f0f0;
+  --card-deep: #e8e8e8;
   --card-line: #000000;
-  --text: #000000;
   --text-dim: #666666;
+  --icon: #000000;
   --card-border: #000000;
   --card-shadow: 0px 4px 0px 0px #000000;
-  --accent: #888888;
+  --bar-shadow: 0px 6px 0px 0px #000000;
   --pad-x: 16px;
-  --gap: 12px;
-  --card-h: 52px;
-  --card-radius: 12px;
 }
 
+/* Borders and hard shadows on the cards */
+#search-box,
+.result-item,
+.special-card {
+  border: 2px solid #000 !important;
+  border-radius: var(--card-radius) !important;
+}
 #search-box {
-  border: 2px solid #000 !important;
   box-shadow: 0px 6px 0px 0px #000 !important;
-  border-radius: var(--card-radius) !important;
 }
-
-.result-item {
-  border: 2px solid #000 !important;
+.result-item,
+.special-card {
   box-shadow: 0px 4px 0px 0px #000 !important;
-  border-radius: var(--card-radius) !important;
-  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+.result-item:hover {
+  background-color: var(--card-hover);
 }
 
-.result-item.selected {
-  transform: translateY(4px) !important;
-  box-shadow: 0px 0px 0px 0px #000 !important;
-  background-color: var(--card-hover) !important;
+/* Buttons in the settings */
+.seg-row {
+  background: transparent !important;
 }
-
-.swatch, .stepper-btn, .seg-btn, .align-cell, .settings-text-btn {
+.swatch, .stepper-btn, #clear-btn, .seg-btn, .align-cell {
   border: 2px solid #000 !important;
   border-radius: 10px !important;
   box-shadow: 0px 3px 0px 0px #000 !important;
   transition: all 0.15s ease !important;
 }
-
-.stepper-btn:active, .seg-btn:active, .align-cell:active {
+.swatch:active, .stepper-btn:active, #clear-btn:active, .seg-btn:active, .align-cell:active {
   transform: translateY(3px) !important;
   box-shadow: 0px 0px 0px 0px #000 !important;
 }
 
+/* A chunky switch */
 .toggle {
-  width: 2.5em !important;
-  height: 1.2em !important;
+  --switch_width: 2.5em;
+  --switch_height: 1.2em;
+  font-size: 17px;
+  width: var(--switch_width) !important;
+  height: var(--switch_height) !important;
   border: 2px solid #000 !important;
   background-color: #e8e8e8 !important;
-  border-radius: 1.2em !important;
+  border-radius: var(--switch_height) !important;
   box-sizing: border-box;
-  position: relative;
+  transition: 0.15s;
 }
-
-.toggle.on { background-color: #888 !important; }
-
+.toggle.on {
+  background-color: #888 !important;
+}
 .toggle-knob {
-  position: absolute;
-  width: 1.2em !important;
-  height: 1.2em !important;
+  box-sizing: border-box;
+  height: var(--switch_height) !important;
+  width: var(--switch_height) !important;
   border: 2px solid #000 !important;
   border-radius: 100% !important;
   left: -2px !important;
+  top: auto !important;
   bottom: -2px !important;
   background-color: #e8e8e8 !important;
   box-shadow: 0 0.2em 0 #000 !important;
+  transition: 0.15s !important;
 }
-
-.toggle.on .toggle-knob { left: calc(2.5em - 1.2em - 2px) !important; }`
+/* Umbra moves the knob with a transform of its own (translateX on .on), so the lift is set for
+   every state here, or the switch's own move adds to it and the knob leaves the track. */
+.toggle .toggle-knob,
+.toggle.on .toggle-knob {
+  transform: translateY(-0.2em) !important;
+}
+.toggle:hover .toggle-knob,
+.toggle.on:hover .toggle-knob {
+  transform: translateY(-0.3em) !important;
+  box-shadow: 0 0.3em 0 #000 !important;
+}
+.toggle.on .toggle-knob {
+  left: calc(var(--switch_width) - var(--switch_height) - 2px) !important;
+}`
 
 export const SOLARIZED_CSS = `:root {
-  --card-bg: #002b36;
+  --card-bg: #002b36 !important;
   --card-hover: #073642;
   --card-selected: #073642;
   --card-deep: #001f27;
   --card-line: #586e75;
-  --text: #eee8d5;
+  --text: #eee8d5 !important;
   --text-dim: #93a1a1;
   --icon: #b58900;
   --card-border: rgba(147, 161, 161, 0.25);
-  --accent: #268bd2;
+  --accent: #268bd2 !important;
   --tile-exe: #cb4b16;
   --tile-folder: #b58900;
   --tile-media: #6c71c4;
-  --card-radius: 10px;
-  --card-border-w: 1px;
+  --card-radius: 10px !important;
+  --card-border-w: 1px !important;
 }`
 
 /** Full variable reference: everything Umbra reads from :root. */

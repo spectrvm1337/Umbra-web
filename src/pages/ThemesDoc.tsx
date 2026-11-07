@@ -70,10 +70,12 @@ export function ThemesDoc() {
           <Reveal as="div">
             <h2 className="doc__h2">2. Try it here first</h2>
             <p className="doc__text">
-              Edit the CSS on the right. The panel on the left is the real interface at
-              its real size — switch tabs to walk through results, settings, the Appearance
-              panel and popups. Its Corner Radius and Search bar gradient switches work, so a
-              theme can be checked with squircle corners and without the gradient too.
+              Edit the CSS on the right. The panel on the left is Umbra itself — its own
+              stylesheet, fonts and markup at their real size — and your theme is applied to it
+              the way the app applies one, so what you see is what you get. Switch tabs to walk
+              through results, settings, the Appearance panel and popups; hover anything, and
+              try the Appearance switches (corners, density, font, border, glow, the search bar
+              gradient) to check the theme in each.
             </p>
           </Reveal>
 
