@@ -39,6 +39,6 @@
   width: 100%;
   border: 0;
   border-radius: 12px;
-  background: #23302f;
+  background: transparent;
   transition: height 0.3s cubic-bezier(0.32, 0.72, 0, 1);
 }

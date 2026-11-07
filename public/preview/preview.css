@@ -8,8 +8,8 @@ body {
   overflow: hidden;
 }
 body {
-  /* Something behind the window, so see-through cards read as they do over a desktop. */
-  background: linear-gradient(135deg, #34424a 0%, #4a3f54 45%, #23302f 100%);
+  /* The page behind shows through, as the desktop does behind the app. */
+  background: transparent;
   padding-bottom: 20px;
 }
 
